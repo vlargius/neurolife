@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/neurolife/.vs/neurolife/v15
+/neurolife/bin/(Configuration)
+/neurolife/buld
