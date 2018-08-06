@@ -2,6 +2,7 @@
 #include <iomanip>
 
 #include "world.h"
+#include "my_utils.h"
 
 World::World()
 {
@@ -14,6 +15,8 @@ World::~World()
 
 void World::init(const WorldConfig & world_cfg)
 {
+	time_to_live = world_cfg.ttl;
+	curr_step = 0;
 	field = std::make_unique<Field>(world_cfg.feild_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
@@ -22,8 +25,17 @@ void World::init(const WorldConfig & world_cfg)
 
 void World::start()
 {
-	auto& a = actors.front();
-	draw();
+	for (size_t i = 0; i < time_to_live; ++i) {
+		--curr_step;
+		my::clear();
+		for (auto& a : actors) {
+			a.take_action();
+		}
+		draw();
+		my::sleep(1000);
+		
+		
+	}
 }
 
 void World::stop()
@@ -34,6 +46,7 @@ void World::step(size_t s)
 {
 }
 
+
 void World::draw()
 {
 	for (size_t i = 0; i < field->get_length(); ++i) {
@@ -42,7 +55,7 @@ void World::draw()
 				cout << setw(3) << ".";
 			}
 			else {
-				cout << setw(3) << "A";
+				cout << setw(3) << my::color(my::red) << "A" << my::color(my::white);
 			}
 		}
 		cout << endl;

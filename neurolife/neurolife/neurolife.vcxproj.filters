@@ -27,6 +27,9 @@
     <ClCompile Include="actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="my_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="my_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

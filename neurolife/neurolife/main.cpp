@@ -14,6 +14,7 @@ int main() {
 	WorldConfig wcfg;
 	wcfg.actor_count = 1;
 	wcfg.feild_cfg= { 10, 10 };
+	wcfg.ttl = 100;
 
 	try {
 		w.init(wcfg);

@@ -6,8 +6,9 @@
 #include "actor.h"
 
 struct WorldConfig {
-	FieldConf feild_cfg;
-	unsigned actor_count;
+	FieldConf	feild_cfg;
+	unsigned	actor_count;
+	size_t		ttl;
 };
 
 class World
@@ -27,6 +28,8 @@ public:
 private:
 	std::unique_ptr<Field> field;
 	vector<Actor> actors;
+	size_t time_to_live;
+	size_t curr_step;
 
 	bool is_empty(size_t x, size_t y);
 };

@@ -21,6 +21,6 @@ private:
 
 	int health;
 
-	Field * filed;
+	Field * field;
 };
 
