@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "world.h"
+#include "exceptions.h"
 
 void wait_key_press() {
 	cin.clear();
@@ -19,7 +20,11 @@ int main() {
 	try {
 		w.init(wcfg);
 		w.start();
-	} catch (...) {
+	}
+	catch (Error& e) {
+		cout << e.what();
+	} 
+	catch (...) {
 		cout << "something bad happened" << endl;
 	}
 

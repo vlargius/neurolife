@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <iomanip>
+#include <sstream>
 
 #include "world.h"
 #include "my_utils.h"
+#include "exceptions.h"
 
 World::World()
 {
@@ -49,17 +51,29 @@ void World::step(size_t s)
 
 void World::draw()
 {
-	for (size_t i = 0; i < field->get_length(); ++i) {
-		for (size_t j = 0; j < field->get_height(); ++j) {
-			if (is_empty(i, j)) {
-				cout << setw(3) << ".";
+	switch (context.type)
+	{
+	case OUT_hdl::Console:
+	{
+		ostream& os = context.os;
+		for (size_t i = 0; i < field->get_length(); ++i) {
+			for (size_t j = 0; j < field->get_height(); ++j) {
+				if (is_empty(i, j)) {
+					os << setw(3) << ".";
+				}
+				else {
+					os << setw(3) << my::color(my::red) << "A" << my::color(my::white);
+				}
 			}
-			else {
-				cout << setw(3) << my::color(my::red) << "A" << my::color(my::white);
-			}
+			os << endl;
 		}
-		cout << endl;
+		break;
 	}
+	default:
+		error("not implemented");
+		break;
+	}
+	
 }
 
 bool World::is_empty(size_t x, size_t y)

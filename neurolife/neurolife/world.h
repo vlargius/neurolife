@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <sstream>
 
 #include "field.h"
 #include "actor.h"
@@ -9,6 +10,16 @@ struct WorldConfig {
 	FieldConf	feild_cfg;
 	unsigned	actor_count;
 	size_t		ttl;
+};
+
+struct OUT_hdl {
+	enum Type {Console, GUI};
+	OUT_hdl():
+		type(Console),
+		os(cout) {}
+
+	ostream& os;
+	Type type;
 };
 
 class World
@@ -24,6 +35,8 @@ public:
 
 	void step(size_t s = 1);
 	void draw();
+
+	OUT_hdl context;
 
 private:
 	std::unique_ptr<Field> field;

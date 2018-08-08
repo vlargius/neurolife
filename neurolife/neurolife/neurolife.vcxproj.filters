@@ -44,5 +44,8 @@
     <ClInclude Include="my_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

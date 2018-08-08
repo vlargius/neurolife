@@ -4,3 +4,7 @@
 
 /neurolife/.vs/neurolife/v15
 /neurolife/buld
+*.ilk
+*.pdb
+*.iobj
+*.ipdb
