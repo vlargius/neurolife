@@ -3,4 +3,5 @@
 using std::string;
 
 const string symb_actor = "  A";
+const string symb_grass = "  G";
 const string symb_empty = ".";

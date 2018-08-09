@@ -6,17 +6,19 @@
 
 #include "field.h"
 #include "actor.h"
+#include "grass.h"
 
 using namespace std;
 
 struct WorldConfig {
 	FieldConf	field_cfg;
 	unsigned	actor_count;
+	unsigned	grass_count;
 	size_t		ttl;
 };
 
 inline istream& operator>>(istream& is, WorldConfig & w_cgf) {
-	is >> w_cgf.field_cfg >> w_cgf.actor_count >> w_cgf.ttl;
+	is >> w_cgf.field_cfg >> w_cgf.actor_count >> w_cgf.grass_count>> w_cgf.ttl;
 	return is;
 }
 
@@ -48,11 +50,14 @@ public:
 	OUT_hdl context;
 
 private:
-	std::unique_ptr<Field> field;
+	std::shared_ptr<Field> field;
 	vector<Actor> actors;
+	vector<Grass> meal;
 	size_t time_to_live;
 	size_t curr_step;
 
-	bool is_empty(size_t x, size_t y);
+	template<class T>
+	bool any_of(const vector<T> & creatures, size_t x, size_t y) const;
 };
+
 

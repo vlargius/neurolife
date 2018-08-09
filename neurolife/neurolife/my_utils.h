@@ -57,7 +57,8 @@ inline std::ostream & operator<<(std::ostream & os, const my::color & c)
 	#ifdef LINUX
 		return c.set(os);
 	#else 
-		return c.set(os);
+		c.set();
+		return os;
 	#endif
 	
 }

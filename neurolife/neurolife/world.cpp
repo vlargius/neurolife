@@ -21,9 +21,13 @@ void World::init(const WorldConfig & world_cfg)
 {
 	time_to_live = world_cfg.ttl;
 	curr_step = 0;
-	field = std::make_unique<Field>(world_cfg.field_cfg);
+	field = std::make_shared<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
+	}
+
+	for (size_t i = 0; i < world_cfg.grass_count; ++i) {
+		meal.emplace_back(field.get());
 	}
 }
 
@@ -60,11 +64,15 @@ void World::draw()
 		ostream& os = context.os;
 		for (size_t i = 0; i < field->get_length(); ++i) {
 			for (size_t j = 0; j < field->get_height(); ++j) {
-				if (is_empty(i, j)) {
-					os << setw(3) << symb_empty;
+				
+				if (any_of(meal, i, j)) {
+					os << setw(3) << my::color(my::green) << symb_grass << my::color(my::white);
+				}
+				else if(any_of(actors, i, j)) {
+					os << setw(3) << my::color(my::red) << symb_actor << my::color(my::white);
 				}
 				else {
-					os << setw(3) << my::color(my::red) << symb_actor << my::color(my::white);
+					os << setw(3) << symb_empty;
 				}
 			}
 			os << endl;
@@ -78,9 +86,10 @@ void World::draw()
 	
 }
 
-bool World::is_empty(size_t x, size_t y)
+template<class T>
+inline bool World::any_of(const vector<T> & creatures, size_t x, size_t y) const
 {
-	return !std::any_of(actors.begin(), actors.end(), [&](const Actor& a) {
-		return x == a.get_x() &&  y == a.get_y();
+	return std::any_of(creatures.begin(), creatures.end(), [&](const T& c) {
+		return x == c.get_x() && y == c.get_y();
 	});
 }

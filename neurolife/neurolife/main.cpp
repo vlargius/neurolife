@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 		cout << "something bad happened" << endl;
 	}
 
-	//wait_key_press();
+	wait_key_press();
 
 
 	return 0;

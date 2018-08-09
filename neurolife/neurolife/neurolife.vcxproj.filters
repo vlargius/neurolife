@@ -30,6 +30,12 @@
     <ClCompile Include="my_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="creature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world.h">
@@ -45,6 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="service_symbols.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

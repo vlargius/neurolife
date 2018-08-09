@@ -18,15 +18,15 @@ inline istream& operator>>(istream& is, FieldConf & f_cgf) {
 class Field
 {
 public:
-
+	Field();
 	Field(const FieldConf& fcfg);
-
-	~Field();
-
 	bool is_valid(size_t x, size_t y) const;
 
 	size_t get_length() const { return length; }
 	size_t get_height() const { return height; }
+
+	size_t get_rand_x() const;
+	size_t get_rand_y() const;
 
 private:
 	size_t length;

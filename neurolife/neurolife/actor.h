@@ -3,24 +3,17 @@
 #include <stdlib.h>
 
 #include "field.h"
+#include "creature.h"
 
-class Actor
+class Actor : public Creature
 {
 public:
 	Actor(Field * filed);
-	~Actor();
 
-	void take_action();
-
-	size_t get_x() const { return x; }
-	size_t get_y() const { return y; }
+	void take_action();	
 
 private:
-	size_t x;
-	size_t y;
 
 	int health;
-
-	Field * field;
 };
 

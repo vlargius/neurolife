@@ -1,14 +1,9 @@
 #include "actor.h"
 #include "my_utils.h"
 
-Actor::Actor(Field * field) : 
-	field(field),
-	x(2),
-	y(5) {
-}
+Actor::Actor(Field * field) :
+	Creature(field) {
 
-Actor::~Actor()
-{
 }
 
 void Actor::take_action()
@@ -20,5 +15,5 @@ void Actor::take_action()
 		x += dx;
 		y += dy;
 	}
-
+	
 }
