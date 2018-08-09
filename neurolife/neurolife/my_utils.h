@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <string>
 
 #ifdef LINUX
 #include <unistd.h>
@@ -9,31 +10,54 @@
 #ifdef WINDOWS
 #include <windows.h>
 #endif
+
+using std::string;
+
 namespace my {
 	void sleep(int sleepMs);
 
 	void clear();
 
+
+
 	// helper class
 	class color {
 	public:
-		color(WORD val);
+		color(unsigned short val) :
+			m_val(val) { }
+
+		color(string val):
+			m_val_unix(val) { }
 
 		void set() const;
+		std::ostream& set(std::ostream& os) const;
 
 	private:
-		WORD m_val;
+		unsigned short m_val;
+		string m_val_unix;
 	};
 
+
+#ifdef WINDOWS
 	static const color red(4);
 	static const color green(2);
 	static const color blue(1);
 	static const color white(7);
+#endif
+#ifdef LINUX
+	static const color red("\033[0;31m");
+	static const color green("\033[1;32m");
+	static const color blue("\033[0;36m");
+	static const color white("\033[0m");
+#endif
 }
 
-// overload operator<< to get manipulator to work
 inline std::ostream & operator<<(std::ostream & os, const my::color & c)
 {
-	c.set();
-	return os;
+	#ifdef LINUX
+		return c.set(os);
+	#else 
+		return c.set(os);
+	#endif
+	
 }

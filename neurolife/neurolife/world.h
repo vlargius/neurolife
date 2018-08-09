@@ -1,16 +1,25 @@
 #pragma once
 
+#include <iostream>
 #include <memory>
 #include <sstream>
 
 #include "field.h"
 #include "actor.h"
 
+using namespace std;
+
 struct WorldConfig {
-	FieldConf	feild_cfg;
+	FieldConf	field_cfg;
 	unsigned	actor_count;
 	size_t		ttl;
 };
+
+inline istream& operator>>(istream& is, WorldConfig & w_cgf) {
+	is >> w_cgf.field_cfg >> w_cgf.actor_count >> w_cgf.ttl;
+	return is;
+}
+
 
 struct OUT_hdl {
 	enum Type {Console, GUI};

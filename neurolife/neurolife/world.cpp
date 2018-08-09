@@ -1,10 +1,12 @@
 #include <algorithm>
 #include <iomanip>
 #include <sstream>
+#include <memory>
 
 #include "world.h"
 #include "my_utils.h"
 #include "exceptions.h"
+#include "service_symbols.h"
 
 World::World()
 {
@@ -19,7 +21,7 @@ void World::init(const WorldConfig & world_cfg)
 {
 	time_to_live = world_cfg.ttl;
 	curr_step = 0;
-	field = std::make_unique<Field>(world_cfg.feild_cfg);
+	field = std::make_unique<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
 	}
@@ -59,10 +61,10 @@ void World::draw()
 		for (size_t i = 0; i < field->get_length(); ++i) {
 			for (size_t j = 0; j < field->get_height(); ++j) {
 				if (is_empty(i, j)) {
-					os << setw(3) << ".";
+					os << setw(3) << symb_empty;
 				}
 				else {
-					os << setw(3) << my::color(my::red) << "A" << my::color(my::white);
+					os << setw(3) << my::color(my::red) << symb_actor << my::color(my::white);
 				}
 			}
 			os << endl;
