@@ -7,5 +7,6 @@ Creature::Creature(Field * f):
 Creature::Creature(Field * f, size_t x, size_t y):
 	field(f),
 	x(x),
-	y(y) {
+	y(y),
+	is_alive(true) {
 }

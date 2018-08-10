@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <thread>
 
 #include "world.h"
 #include "exceptions.h"
@@ -33,9 +34,14 @@ int main(int argc, char* argv[]) {
 		config_file >> wcfg; 
 
 		World w;
+		w.init(wcfg);
+		w.start();
+
+		//std::thread main_t(&World::start, &w);
+		//std::thread control_t(&World::joystick, &w);
 		
-			w.init(wcfg);
-			w.start();
+		//main_t.join();
+		//control_t.join();
 	}
 	catch (Error& e) {
 		cout << e.what() << endl;

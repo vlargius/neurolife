@@ -5,15 +5,29 @@
 #include "field.h"
 #include "creature.h"
 
+const int default_decay = 5;
+const int default_speed = 3;
+const int default_hp = 100;
+
 class Actor : public Creature
 {
 public:
 	Actor(Field * filed);
 
-	void take_action();	
+	void live();
+	int get_hp() { return hp; }
 
 private:
+	int hp;
 
-	int health;
+	unsigned move_speed;
+
+	int decay_speed;
+	int curr_decay;
+
+	void take_action();	
+	void decay();
+
+	void random();
 };
 
