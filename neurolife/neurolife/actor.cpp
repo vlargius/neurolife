@@ -1,9 +1,12 @@
+#include <algorithm>
+#include <stdlib.h>
+
 #include "actor.h"
 #include "my_utils.h"
 #include "grass.h"
 
 Actor::Actor(Field * field) :
-	Creature(field),
+	Creature(field, field->get_rand_x(), field->get_rand_y()),
 	hp(default_hp),
 	move_speed(default_speed),
 	decay_speed(default_decay),
@@ -21,8 +24,11 @@ void Actor::decay() {
 }
 
 int trim(int i) {
-	if(i != 0) {
+	if(i != 0 && i > 0) {
 		i/=i;
+	}
+	if (i != 0 && i < 0) {
+		i /= -i;
 	}
 	return i;
 }
@@ -35,8 +41,16 @@ void Actor::take_action() {
 	int nx = x;
 	int ny = y;
 
-	if(field->meal->size() > 0) {
-		Grass& g = field->meal->front();
+	auto& meal = *field->meal;
+
+	if(meal.size() > 0) {
+		auto dist = [&](const Grass& g) { 
+			return (g.get_x() - nx)*(g.get_x() - nx) + (g.get_y() - ny) * (g.get_y() - ny);
+		};
+
+		auto& g = *std::min_element(meal.begin(), meal.end(), [&](const Grass& l, const Grass& r) {
+			return dist(l) < dist(r);
+		});
 		//set new goal
 		gy = g.get_y();
 		gx = g.get_x();
@@ -47,8 +61,8 @@ void Actor::take_action() {
 	}
 
 	while(speed != 0) {
-		nx+=trim(nx - gx);
-		ny+=trim(ny - gy);
+		nx+=trim(gx - nx);
+		ny+=trim(gy- ny);
 
 		--speed;
 	}

@@ -6,7 +6,7 @@
 #include "creature.h"
 
 const int default_decay = 5;
-const int default_speed = 3;
+const int default_speed = 2;
 const int default_hp = 100;
 
 class Actor : public Creature
