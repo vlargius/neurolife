@@ -8,6 +8,7 @@
 #include <condition_variable>
 #include <list>
 
+#include "draw_context.h"
 #include "field.h"
 #include "actor.h"
 #include "grass.h"
@@ -21,47 +22,42 @@ struct WorldConfig {
 	size_t		ttl;
 };
 
+
 inline istream& operator>>(istream& is, WorldConfig & w_cgf) {
 	is >> w_cgf.field_cfg >> w_cgf.actor_count >> w_cgf.grass_count>> w_cgf.ttl;
 	return is;
 }
+class World;
 
-
-struct OUT_hdl {
-	enum Type {Console, GUI};
-	OUT_hdl():
-		type(Console),
-		os(cout) {}
-
-	ostream& os;
-	Type type;
-};
 
 class World
 {
 public:
 	World();
 
-	void init(const WorldConfig& world_cfg);
+	void init(const WorldConfig& world_cfg, DrawContext * context);
 
 	void start();
+	void stop();
+	void start_mt();
 	void pause();
 	void resume();
 
-	void proc();
-
-	void joystick();
-
-	void step(size_t s = 1);
+	void tick(size_t s = 1);
 	void draw();
 
 	string get_state() const;
+	size_t get_curr_step() const { return curr_step; }
 
-	OUT_hdl context;
+	const Field * get_field() const { return field.get(); }
+	const list<Actor> & get_actors() const { return actors; }
+	const list<Grass> & get_meal() const { return meal; }
+	
+	bool is_meal(size_t x, size_t y) const;
+	bool is_actor(size_t x, size_t y) const;
 
 private:
-	void draw_head(ostream& os);
-	void draw_filed(ostream& os);
+	DrawContext * context;
 
 	std::shared_ptr<Field> field;
 	list<Actor> actors;
@@ -75,8 +71,10 @@ private:
 	bool is_active;
 	std::condition_variable cond;
 
-	template<class T>
-	bool any_of(const list<T> & creatures, size_t x, size_t y) const;
-};
+	void joystick();
+	void process();
 
+	template<class T>
+	inline bool any_of(const list<T> & l, size_t x, size_t y) const;
+};
 

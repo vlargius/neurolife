@@ -1,19 +1,20 @@
 #include <algorithm>
-#include <iomanip>
-#include <sstream>
 #include <memory>
 
 #include "world.h"
-#include "my_utils.h"
 #include "exceptions.h"
 #include "service_symbols.h"
+#include "my_utils.h"
+
+const int dt = 100;
 
 World::World():
 	is_active(false) {}
 
 
-void World::init(const WorldConfig & world_cfg)
+void World::init(const WorldConfig & world_cfg, DrawContext * context)
 {
+	this->context = context;
 	time_to_live = world_cfg.ttl;
 	curr_step = 0;
 	field = std::make_shared<Field>(world_cfg.field_cfg);
@@ -29,36 +30,20 @@ void World::init(const WorldConfig & world_cfg)
 	field->meal = &meal;
 }
 
-void World::start()
-{	
-	is_active = true;
-	for (size_t i = 0; i < time_to_live; ++i) {
-		while (!is_active) { 
-			draw();
-			std::unique_lock<std::mutex> lock(com_lock);
-            cond.wait(lock);
-        }	
-
-		step();
-
-		draw();
-
-		my::sleep(1000);	
-		
-	}
+void World::start() {
+	process();
 }
 
-void World::proc() {
-	is_active = true;
-	
-	while(true) {		
-		while (!is_active) { 
-			std::unique_lock<std::mutex> lock(com_lock);
-            cond.wait(lock);
-        }
-		cout << "i am alive" << endl;
-		my::sleep(500);	
-	}
+void World::stop()
+{
+}
+
+void World::start_mt() {
+	std::thread main_t(&World::process, this);
+	std::thread control_t(&World::joystick, this);
+
+	main_t.join();
+	control_t.join();
 }
 
 void World::joystick() {
@@ -77,6 +62,24 @@ void World::joystick() {
 	}
 }
 
+void World::process()
+{
+	is_active = true;
+	for (size_t i = 0; i < time_to_live; ++i) {
+		while (!is_active) {
+			draw();
+			std::unique_lock<std::mutex> lock(com_lock);
+			cond.wait(lock);
+		}
+
+		tick();
+		draw();
+
+		my::sleep(dt);
+
+	}
+}
+
 void World::pause() {
 	std::unique_lock<std::mutex> lock(com_lock);
 	is_active = false;
@@ -89,7 +92,7 @@ void World::resume() {
 	cond.notify_one();
 }
 
-void World::step(size_t s)
+void World::tick(size_t s)
 {
 	++curr_step;
 	for(auto& a: actors) {
@@ -104,56 +107,25 @@ string World::get_state() const {
 	return (is_active ? "active" : "paused");
 }
 
-void World::draw_head(ostream& os) {
-	os << "[setp: " << curr_step << "] " 
-		<< "[state: " << get_state() << "] " 
-		<< "[hp:" << actors.front().get_hp() << "]" 
-		<< "[meal: " << meal.size() << "]" <<  endl;
+bool World::is_meal(size_t x, size_t y) const
+{
+	return any_of(meal, x, y);
 }
 
-void World::draw_filed(ostream& os) {
-	for (size_t i = 0; i < field->get_length(); ++i) {
-			for (size_t j = 0; j < field->get_height(); ++j) {
+bool World::is_actor(size_t x, size_t y) const
+{
+	return any_of(actors, x, y);
+}
 
-				bool is_grass =  any_of(meal, i, j);
-				bool is_actor = any_of(actors, i, j);
-
-				if(is_actor && is_grass) {
-					os << setw(3) << my::color(my::blue) << symb_consuming << my::color(my::white);
-				} else if (is_actor) {
-					os << setw(3) << my::color(my::red) << symb_actor << my::color(my::white);
-				} else if (is_grass) {
-					os << setw(3) << my::color(my::green) << symb_grass << my::color(my::white);
-				} else {
-					os << setw(3) << symb_empty;
-				}
-			}
-			os << endl;
-		}
+template<class T>
+inline bool World::any_of(const list<T>& l, size_t x, size_t y) const
+{
+	return std::any_of(l.begin(), l.end(), [&](const T& c) {
+		return x == c.get_x() && y == c.get_y();
+	});
 }
 
 void World::draw()
 {
-	switch (context.type)
-	{
-	case OUT_hdl::Console:
-	{
-		my::clear();
-		draw_head(context.os);
-		draw_filed(context.os);
-		break;
-	}
-	default:
-		error("not implemented");
-		break;
-	}
-	
-}
-
-template<class T>
-inline bool World::any_of(const list<T> & creatures, size_t x, size_t y) const
-{
-	return std::any_of(creatures.begin(), creatures.end(), [&](const T& c) {
-		return x == c.get_x() && y == c.get_y();
-	});
+	context->draw();
 }

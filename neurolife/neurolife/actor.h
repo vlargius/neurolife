@@ -15,7 +15,7 @@ public:
 	Actor(Field * filed);
 
 	void live();
-	int get_hp() { return hp; }
+	int get_hp() const { return hp; }
 
 private:
 	int hp;
