@@ -4,7 +4,7 @@ Creature::Creature(Field * f):
 	Creature(f, 0, 0) {
 }
 
-Creature::Creature(Field * f, size_t x, size_t y):
+Creature::Creature(Field * f, double x, double y):
 	field(f),
 	x(x),
 	y(y),

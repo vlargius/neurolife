@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
 		config_file >> wcfg; 
 
 		World w;
-		//GUIContext context(640, 480);
-		ConsoleContext context(cout);
+		GUIContext context(1200, 900);
+		//ConsoleContext context(cout);
 		context.init(&w);		
 		w.init(wcfg, &context);
 

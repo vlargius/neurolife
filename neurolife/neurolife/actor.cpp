@@ -23,7 +23,7 @@ void Actor::decay() {
 	if(hp == 0) { kill(); }
 }
 
-int trim(int i) {
+double trim(double i) {
 	if(i != 0 && i > 0) {
 		i/=i;
 	}
@@ -34,12 +34,13 @@ int trim(int i) {
 }
 
 void Actor::take_action() {
-	int speed = move_speed;
-	int gx = x;
-	int gy = y;
+	const double eps = 1;
+	double speed = move_speed;
+	double gx = x;
+	double gy = y;
 
-	int nx = x;
-	int ny = y;
+	double nx = x;
+	double ny = y;
 
 	auto& meal = *field->meal;
 
@@ -55,17 +56,15 @@ void Actor::take_action() {
 		gy = g.get_y();
 		gx = g.get_x();
 
-		if(x == gx && y == gy) {
+		if(abs(x - gx) <= eps && abs(y - gy) <= eps) {
 			g.kill();
 		}
 	}
 
-	while(speed != 0) {
-		nx+=trim(gx - nx);
-		ny+=trim(gy- ny);
+	
+	nx+=(gx - nx)/speed;
+	ny+=(gy - ny)/speed;
 
-		--speed;
-	}
 
 	if (field->is_valid(nx, ny)) {
 		x = nx;

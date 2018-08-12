@@ -16,6 +16,9 @@ void GUIContext::draw() {
 
 	const Actor& a = w->get_actors().front();
 	
+	for (auto v : w->get_views()) {
+		v.second->render();
+	}
 
 	SDL_RenderPresent(render);
 	

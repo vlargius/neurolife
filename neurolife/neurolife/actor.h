@@ -5,9 +5,9 @@
 #include "field.h"
 #include "creature.h"
 
-const int default_decay = 5;
-const int default_speed = 2;
-const int default_hp = 100;
+const double default_decay = 5;
+const double default_speed = 10;
+const double default_hp = 100;
 
 class Actor : public Creature
 {
@@ -20,7 +20,7 @@ public:
 private:
 	int hp;
 
-	unsigned move_speed;
+	double move_speed;
 
 	int decay_speed;
 	int curr_decay;

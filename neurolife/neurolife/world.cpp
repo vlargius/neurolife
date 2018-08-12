@@ -12,18 +12,25 @@ World::World():
 	is_active(false) {}
 
 
-void World::init(const WorldConfig & world_cfg, DrawContext * context)
+void World::init(const WorldConfig & world_cfg, GUIContext * context)
 {
 	this->context = context;
 	time_to_live = world_cfg.ttl;
 	curr_step = 0;
+
+	BaseViewModel::c = context;
+
 	field = std::make_shared<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
+		auto & a = actors.back();	
+		views[&a] = new ViewModel<Actor>(a);
 	}
 
 	for (size_t i = 0; i < world_cfg.grass_count; ++i) {
 		meal.emplace_back(field.get());
+		auto & m = meal.back();
+		views[&m] = new ViewModel<Grass>(m);
 	}
 
 	field->actors = &actors;
@@ -99,6 +106,17 @@ void World::tick(size_t s)
 		a.live();
 	}
 
+	//erase from views
+	for (auto it = views.begin(); it != views.end(); /* nothing */) {
+		if (!it->first->is_ok()) {
+			it->second->~BaseViewModel();
+			it = views.erase(it);
+		} else {
+			++it;
+		}
+	}
+
+	//erase models
 	actors.remove_if([](Actor & a){ return !a.is_ok();});
 	meal.remove_if([](Grass & g){ return !g.is_ok();});
 }

@@ -7,10 +7,15 @@
 class BaseViewModel
 {
 public:
-	virtual void render() = 0;
+	virtual void render() {}
 
+	static GUIContext * c;
+
+	virtual  ~BaseViewModel() {
+
+	}
 protected:
-	static GUIContext c;
+	
 };
 
 
@@ -18,6 +23,8 @@ template<class T>
 class ViewModel : public BaseViewModel
 {
 public:
+	ViewModel(const T& obj) :
+		model(obj) {}
 	void render() override;
 
 protected:

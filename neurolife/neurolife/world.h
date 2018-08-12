@@ -7,11 +7,13 @@
 #include <mutex>
 #include <condition_variable>
 #include <list>
+#include <unordered_map>
 
 #include "draw_context.h"
 #include "field.h"
 #include "actor.h"
 #include "grass.h"
+#include "view_model.h"
 
 using namespace std;
 
@@ -33,9 +35,10 @@ class World;
 class World
 {
 public:
+	using M2VM=unordered_map<Creature*, BaseViewModel*>; //model to view model
 	World();
 
-	void init(const WorldConfig& world_cfg, DrawContext * context);
+	void init(const WorldConfig& world_cfg, GUIContext * context);
 
 	void start();
 	void stop();
@@ -52,6 +55,8 @@ public:
 	const Field * get_field() const { return field.get(); }
 	const list<Actor> & get_actors() const { return actors; }
 	const list<Grass> & get_meal() const { return meal; }
+
+	const M2VM & get_views() const { return views; }
 	
 	bool is_meal(size_t x, size_t y) const;
 	bool is_actor(size_t x, size_t y) const;
@@ -62,6 +67,8 @@ private:
 	std::shared_ptr<Field> field;
 	list<Actor> actors;
 	list<Grass> meal;
+
+	M2VM views;
 
 	size_t time_to_live;
 	size_t curr_step;
