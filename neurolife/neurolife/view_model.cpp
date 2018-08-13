@@ -3,44 +3,42 @@
 
 GUIContext * BaseViewModel::c = nullptr;
 
-const int elsize = 15;
+const int elsize = 10;
 
 template<class T>
 void ViewModel<T>::render()
 {
-	//SDL_SetRenderDrawColor(c.render, 255, 0, 0, 255);
-	//SDL_Rect rect{100, 100 ,10, 10 };
 
-	//SDL_RenderDrawRect(c.render, &rect);
 }
 
 template<>
 void ViewModel<Actor>::render()
 {
-	SDL_SetRenderDrawColor(c->render, 255, 0, 0, 255);
+	
 	const Field * f = model.get_field();
 	int x = model.x()/f->get_width() * c->get_width();
 	int y = model.y()/f->get_height() * c->get_height();
-	int h = elsize * model.get_hp() / default_hp;
+	int h = elsize *2* model.get_hp() / default_hp;
 	SDL_Rect rect{x, y, elsize, elsize };
 
+	//draw goal
+	c->set_color(0, 0, 255);
+	vec2d goal = model.get_goal();
+	//goal.normalize();
+	//goal *= 3;
+	int gx = goal.x / f->get_width() * c->get_width();
+	int gy = goal.y / f->get_height() * c->get_height();
+
+	c->set_color(255, 0, 0);
+	c->draw_arrow({ x, y }, { gx,gy });
 	//draw actor
-	SDL_RenderDrawRect(c->render, &rect);
+	c->draw_square({ x,y }, elsize);
 	
 	//draw hp
-	rect.y = y + (elsize - h);
-	rect.h = h;
-	SDL_RenderFillRect(c->render, &rect);
+	c->draw_rect({ x-elsize,y - h + elsize }, elsize * 2, h, true);
 
-	//draw goal
-	if (model.g != nullptr) {
-		SDL_SetRenderDrawColor(c->render, 0, 0, 255, 255);
-		int x = model.g->x() / f->get_width() * c->get_width();
-		int y = model.g->y() / f->get_height() * c->get_height();
+	
 
-		SDL_Rect goal{ x-1, y-1, elsize + 2, elsize + 2 };
-		SDL_RenderDrawRect(c->render, &goal);
-	}
 }
 
 template<>
@@ -50,7 +48,6 @@ void ViewModel<Grass>::render()
 	const Field * f = model.get_field();
 	int x = model.x() / f->get_width() * c->get_width();
 	int y = model.y() / f->get_height() * c->get_height();;
-	SDL_Rect rect{ x, y, elsize, elsize };
-
-	SDL_RenderDrawRect(c->render, &rect);
+	
+	c->draw_square({ x, y }, elsize * 0.7, true);
 }

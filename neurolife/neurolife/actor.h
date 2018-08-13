@@ -6,10 +6,11 @@
 #include "creature.h"
 
 const double default_decay = 0.5;
-const double max_velocity = 20.1;
-const double max_acceleration = 10;
+const double max_velocity = 70.1;
+const double max_acceleration = 2;
 const int default_hp = 1000;
 const double meal_up = 20;
+const double eps = 100;
 
 class Grass;
 
@@ -23,12 +24,15 @@ public:
 
 	bool is_ok() override;
 
-	Grass * g;
+	vec2d get_goal() const { return goal; }
+	void set_goal(const vec2d& v)  { goal = v; }
 
 private:
 	int hp;
 
 	vec2d velocity;
+
+	vec2d goal;
 
 	int decay_speed;
 	int curr_decay;

@@ -36,4 +36,15 @@ struct vec2d {
 	vec2d operator-(const vec2d& a) const {
 		return { x - a.x, y - a.y };
 	}
+
+	vec2d operator-() {
+		return {-x, -y};
+	}
+
+	void trim(double max) {
+		if (len() > max) {
+			normalize();
+			*this *= max;
+		}
+	}
 };

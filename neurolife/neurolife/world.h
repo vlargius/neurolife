@@ -77,8 +77,9 @@ private:
 
 	bool is_active;
 	std::condition_variable cond;
+	SDL_Event e;
 
-	void joystick();
+	void handle_event();
 	void process();
 
 	void grow();

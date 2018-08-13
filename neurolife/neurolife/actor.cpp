@@ -35,42 +35,38 @@ double trim(double i) {
 }
 
 void Actor::take_action() {
-	const double eps = 20;
+	
 	vec2d move{ 0,0 };
 
 	auto& meal = *field->meal;
-	g = nullptr;
+	set_goal({x(), y() });
+
 	if(meal.size() > 0) {
 		auto dist = [&](const Grass& g) { 
 			return (g.x() - x())*(g.x() - x()) + (g.y() - y()) * (g.y() - y());
 		};
 
-		//list<double> dists;
-		//dists.resize(meal.size());
-
-		//transform(meal.begin(), meal.end(), dists.begin(), [&](const Grass& g) {
-		//	return dist(g);
-		//});
-
 		auto& g = *std::min_element(meal.begin(), meal.end(), [&](const Grass& l, const Grass& r) {
 			return dist(l) < dist(r);
 		});
-		//set new goal
-		this->g = &g;
+		
+		set_goal({ g.x(), g.y() });
 		move = { g.x() - x(), g.y() - y() };
 
 		if(move.len() <= eps) {
 			g.kill();
 			grow();
 		}
-
-		move.normalize();
-		move *= max_acceleration;
-		velocity += move;
+	}
+	else {
+		move = -velocity;
 	}
 
-	velocity.normalize();
-	velocity *= max_velocity;
+	move.normalize();
+	move *= max_acceleration;
+	velocity += move;
+
+	velocity.trim(max_velocity);
 	
 	coor += velocity;
 }

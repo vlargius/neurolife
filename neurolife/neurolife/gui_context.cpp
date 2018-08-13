@@ -13,19 +13,11 @@ GUIContext::GUIContext(size_t width, size_t height):
 
 void GUIContext::draw() {
 	clear();
-
 	for (auto v : w->get_views()) {
 		v.second->render();
 	}
 
 	SDL_RenderPresent(render);
-	
-	/*
-	SDL_Event event;
-	while (1) {
-		if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
-			break;
-	}*/
 }
 
 void GUIContext::init_SDL()
@@ -33,6 +25,42 @@ void GUIContext::init_SDL()
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 	}
+}
+
+void GUIContext::set_color(int r, int g, int b) {
+	SDL_SetRenderDrawColor(render, r, g, b, 255);
+}
+
+void GUIContext::draw_arrow(const Point & p1, const Point & p2)
+{
+	SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
+}
+
+void GUIContext::draw_rect(const Point & center, int w, int h, bool filled)
+{
+	SDL_Rect r{ center.x, center.y, w, h };
+	if (!filled) {
+		SDL_RenderDrawRect(render, &r);
+	}
+	else {
+		SDL_RenderFillRect(render, &r);
+	}
+}
+
+void GUIContext::draw_square(const Point & center, int size, bool filled)
+{
+	SDL_Rect r{ center.x - size, center.y - size, size * 2, size * 2 };
+	if (!filled) {
+		SDL_RenderDrawRect(render, &r);
+	}
+	else {
+		SDL_RenderFillRect(render, &r);
+	}
+}
+
+
+void GUIContext::draw_circle(const Point & center, int radius)
+{
 }
 
 void GUIContext::clear() {

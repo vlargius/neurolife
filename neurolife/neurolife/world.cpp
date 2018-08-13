@@ -47,32 +47,53 @@ void World::stop()
 
 void World::start_mt() {
 	std::thread main_t(&World::process, this);
-	std::thread control_t(&World::joystick, this);
+	std::thread control_t(&World::handle_event, this);
 
 	main_t.join();
 	control_t.join();
 }
 
-void World::joystick() {
-	while(true) {
-		string com;
-		cin >> com;
-		if(com == quit_key) {
-			exit(0);
+void World::handle_event() {
+	while (SDL_PollEvent(&e)) {
+		//If user closes the window
+		if (e.type == SDL_QUIT) {
+			is_active = false;
 		}
-		if(com == pause_key) {
-			pause();
+		//If user presses any key
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym) {
+			case SDLK_LEFT:
+				cout << "l";
+				break;
+			case SDLK_RIGHT:
+				cout << "r";
+				break;
+			case SDLK_UP:
+				cout << "u";
+				break;
+			case SDLK_DOWN:
+				cout << "d";
+				break;
+			case SDLK_ESCAPE:
+				is_active = false;
+			default:
+				break;
+			}
 		}
-		if(com == resume_key) {
-			resume();
+		//If user clicks the mouse
+		if (e.type == SDL_MOUSEBUTTONDOWN) {
+			is_active = false;
 		}
+
+		
 	}
 }
 
 void World::process()
 {
 	is_active = true;
-	for (size_t i = 0; i < time_to_live; ++i) {
+	
+	for (size_t i = 0; i < time_to_live && is_active; ++i) {
 		while (!is_active) {
 			draw();
 			std::unique_lock<std::mutex> lock(com_lock);
@@ -82,9 +103,11 @@ void World::process()
 		tick();
 		draw();
 
-		my::sleep(dt);
+		handle_event();
 
+		my::sleep(dt);
 	}
+	cout << "closing" << endl;
 }
 
 void World::grow()
