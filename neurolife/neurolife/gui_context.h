@@ -18,6 +18,9 @@ public:
 	SDL_Window *window;
 	SDL_Renderer *render;
 
+	int get_width() { return width; }
+	int get_height() { return height; }
+
 private:
 	int width = 640;
 	int height = 480;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "field.h"
+#include "vec2d.h"
 
 class Creature
 {
@@ -10,15 +11,16 @@ public:
 	Creature(Field * filed, double x, double y);
 
 	void kill() { is_alive = false; }
-	bool is_ok() {return is_alive; }
+	virtual bool is_ok() {return is_alive; }
 
-	double get_x() const { return x; }
-	double get_y() const { return y; }
+	double x() const { return coor.x; }
+	double y() const { return coor.y; }
+
+	const Field* get_field() const { return field; }
 
 protected:
 
-	double x;
-	double y;
+	vec2d coor;
 
 	bool is_alive;
 

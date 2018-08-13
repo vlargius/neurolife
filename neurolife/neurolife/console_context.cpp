@@ -25,7 +25,7 @@ void ConsoleContext::draw_head() const {
 
 void ConsoleContext::draw_field() const {
 	const Field * field = w->get_field();
-	for (size_t i = 0; i < field->get_length(); ++i) {
+	for (size_t i = 0; i < field->get_width(); ++i) {
 		for (size_t j = 0; j < field->get_height(); ++j) {
 
 			bool is_grass = w->is_meal(i, j);

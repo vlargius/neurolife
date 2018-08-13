@@ -81,6 +81,8 @@ private:
 	void joystick();
 	void process();
 
+	void grow();
+
 	template<class T>
 	inline bool any_of(const list<T> & l, size_t x, size_t y) const;
 };

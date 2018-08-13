@@ -12,8 +12,8 @@ public:
 	static GUIContext * c;
 
 	virtual  ~BaseViewModel() {
-
 	}
+
 protected:
 	
 };

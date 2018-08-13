@@ -83,5 +83,8 @@
     <ClInclude Include="view_model.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="vec2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

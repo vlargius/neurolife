@@ -6,7 +6,7 @@
 #include "service_symbols.h"
 #include "my_utils.h"
 
-const int dt = 100;
+const int dt = 50;
 
 World::World():
 	is_active(false) {}
@@ -87,6 +87,10 @@ void World::process()
 	}
 }
 
+void World::grow()
+{
+}
+
 void World::pause() {
 	std::unique_lock<std::mutex> lock(com_lock);
 	is_active = false;
@@ -139,7 +143,7 @@ template<class T>
 inline bool World::any_of(const list<T>& l, size_t x, size_t y) const
 {
 	return std::any_of(l.begin(), l.end(), [&](const T& c) {
-		return x == c.get_x() && y == c.get_y();
+		return x == c.x() && y == c.y();
 	});
 }
 

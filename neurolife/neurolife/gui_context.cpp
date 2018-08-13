@@ -14,8 +14,6 @@ GUIContext::GUIContext(size_t width, size_t height):
 void GUIContext::draw() {
 	clear();
 
-	const Actor& a = w->get_actors().front();
-	
 	for (auto v : w->get_views()) {
 		v.second->render();
 	}

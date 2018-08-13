@@ -158,6 +158,7 @@
     <ClInclude Include="gui_context.h" />
     <ClInclude Include="my_utils.h" />
     <ClInclude Include="service_symbols.h" />
+    <ClInclude Include="vec2d.h" />
     <ClInclude Include="view_model.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>

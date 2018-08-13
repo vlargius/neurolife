@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-
+#include <ctime>
 
 #include "world.h"
 #include "exceptions.h"
@@ -19,6 +19,7 @@ void wait_key_press() {
 }
 
 int main(int argc, char* argv[]) {
+	srand(time(NULL));
 	string config_name = "default.cfg";
 
 	vector<string> args(argv, argv + argc);
@@ -37,7 +38,7 @@ int main(int argc, char* argv[]) {
 		config_file >> wcfg; 
 
 		World w;
-		GUIContext context(1200, 900);
+		GUIContext context(1200, 600);
 		//ConsoleContext context(cout);
 		context.init(&w);		
 		w.init(wcfg, &context);
