@@ -1,80 +1,117 @@
 #include <algorithm>
-#include <iomanip>
-#include <sstream>
 #include <memory>
 
 #include "world.h"
-#include "my_utils.h"
 #include "exceptions.h"
 #include "service_symbols.h"
+#include "my_utils.h"
+
+const int dt = 50;
 
 World::World():
 	is_active(false) {}
 
 
-void World::init(const WorldConfig & world_cfg)
+void World::init(const WorldConfig & world_cfg, GUIContext * context)
 {
+	this->context = context;
 	time_to_live = world_cfg.ttl;
 	curr_step = 0;
+
+	BaseViewModel::c = context;
+
 	field = std::make_shared<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
+		auto & a = actors.back();	
+		views[&a] = new ViewModel<Actor>(a);
 	}
 
 	for (size_t i = 0; i < world_cfg.grass_count; ++i) {
 		meal.emplace_back(field.get());
+		auto & m = meal.back();
+		views[&m] = new ViewModel<Grass>(m);
 	}
 
 	field->actors = &actors;
 	field->meal = &meal;
 }
 
-void World::start()
-{	
-	is_active = true;
-	for (size_t i = 0; i < time_to_live; ++i) {
-		while (!is_active) { 
-			draw();
-			std::unique_lock<std::mutex> lock(com_lock);
-            cond.wait(lock);
-        }	
+void World::start() {
+	process();
+}
 
-		step();
+void World::stop()
+{
+}
 
-		draw();
+void World::start_mt() {
+	std::thread main_t(&World::process, this);
+	std::thread control_t(&World::handle_event, this);
 
-		my::sleep(1000);	
+	main_t.join();
+	control_t.join();
+}
+
+void World::handle_event() {
+	while (SDL_PollEvent(&e)) {
+		//If user closes the window
+		if (e.type == SDL_QUIT) {
+			is_active = false;
+		}
+		//If user presses any key
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym) {
+			case SDLK_LEFT:
+				cout << "l";
+				break;
+			case SDLK_RIGHT:
+				cout << "r";
+				break;
+			case SDLK_UP:
+				cout << "u";
+				break;
+			case SDLK_DOWN:
+				cout << "d";
+				break;
+			case SDLK_ESCAPE:
+				is_active = false;
+			default:
+				break;
+			}
+		}
+		//If user clicks the mouse
+		if (e.type == SDL_MOUSEBUTTONDOWN) {
+			is_active = false;
+		}
+
 		
 	}
 }
 
-void World::proc() {
+void World::process()
+{
 	is_active = true;
 	
-	while(true) {		
-		while (!is_active) { 
+	for (size_t i = 0; i < time_to_live && is_active; ++i) {
+		while (!is_active) {
+			draw();
 			std::unique_lock<std::mutex> lock(com_lock);
-            cond.wait(lock);
-        }
-		cout << "i am alive" << endl;
-		my::sleep(500);	
+			cond.wait(lock);
+		}
+
+		tick();
+		draw();
+
+		handle_event();
+
+		my::sleep(dt);
 	}
+	cout << "closing" << endl;
 }
 
-void World::joystick() {
-	while(true) {
-		string com;
-		cin >> com;
-		if(com == quit_key) {
-			exit(0);
-		}
-		if(com == pause_key) {
-			pause();
-		}
-		if(com == resume_key) {
-			resume();
-		}
-	}
+void World::grow()
+{
 }
 
 void World::pause() {
@@ -89,13 +126,24 @@ void World::resume() {
 	cond.notify_one();
 }
 
-void World::step(size_t s)
+void World::tick(size_t s)
 {
 	++curr_step;
 	for(auto& a: actors) {
 		a.live();
 	}
 
+	//erase from views
+	for (auto it = views.begin(); it != views.end(); /* nothing */) {
+		if (!it->first->is_ok()) {
+			it->second->~BaseViewModel();
+			it = views.erase(it);
+		} else {
+			++it;
+		}
+	}
+
+	//erase models
 	actors.remove_if([](Actor & a){ return !a.is_ok();});
 	meal.remove_if([](Grass & g){ return !g.is_ok();});
 }
@@ -104,56 +152,25 @@ string World::get_state() const {
 	return (is_active ? "active" : "paused");
 }
 
-void World::draw_head(ostream& os) {
-	os << "[setp: " << curr_step << "] " 
-		<< "[state: " << get_state() << "] " 
-		<< "[hp:" << actors.front().get_hp() << "]" 
-		<< "[meal: " << meal.size() << "]" <<  endl;
+bool World::is_meal(size_t x, size_t y) const
+{
+	return any_of(meal, x, y);
 }
 
-void World::draw_filed(ostream& os) {
-	for (size_t i = 0; i < field->get_length(); ++i) {
-			for (size_t j = 0; j < field->get_height(); ++j) {
+bool World::is_actor(size_t x, size_t y) const
+{
+	return any_of(actors, x, y);
+}
 
-				bool is_grass =  any_of(meal, i, j);
-				bool is_actor = any_of(actors, i, j);
-
-				if(is_actor && is_grass) {
-					os << setw(3) << my::color(my::blue) << symb_consuming << my::color(my::white);
-				} else if (is_actor) {
-					os << setw(3) << my::color(my::red) << symb_actor << my::color(my::white);
-				} else if (is_grass) {
-					os << setw(3) << my::color(my::green) << symb_grass << my::color(my::white);
-				} else {
-					os << setw(3) << symb_empty;
-				}
-			}
-			os << endl;
-		}
+template<class T>
+inline bool World::any_of(const list<T>& l, size_t x, size_t y) const
+{
+	return std::any_of(l.begin(), l.end(), [&](const T& c) {
+		return x == c.x() && y == c.y();
+	});
 }
 
 void World::draw()
 {
-	switch (context.type)
-	{
-	case OUT_hdl::Console:
-	{
-		my::clear();
-		draw_head(context.os);
-		draw_filed(context.os);
-		break;
-	}
-	default:
-		error("not implemented");
-		break;
-	}
-	
-}
-
-template<class T>
-inline bool World::any_of(const list<T> & creatures, size_t x, size_t y) const
-{
-	return std::any_of(creatures.begin(), creatures.end(), [&](const T& c) {
-		return x == c.get_x() && y == c.get_y();
-	});
+	context->draw();
 }

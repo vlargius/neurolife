@@ -1,24 +1,26 @@
 #pragma once
 
 #include "field.h"
+#include "vec2d.h"
 
 class Creature
 {
 public:
 	Creature(Field * filed);
 
-	Creature(Field * filed, size_t x, size_t y);
+	Creature(Field * filed, double x, double y);
 
 	void kill() { is_alive = false; }
-	bool is_ok() {return is_alive; }
+	virtual bool is_ok() {return is_alive; }
 
-	size_t get_x() const { return x; }
-	size_t get_y() const { return y; }
+	double x() const { return coor.x; }
+	double y() const { return coor.y; }
+
+	const Field* get_field() const { return field; }
 
 protected:
 
-	size_t x;
-	size_t y;
+	vec2d coor;
 
 	bool is_alive;
 

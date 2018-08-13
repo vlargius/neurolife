@@ -5,25 +5,26 @@
 #include "my_utils.h"
 #include "grass.h"
 
+#undef min;
+
 Actor::Actor(Field * field) :
 	Creature(field, field->get_rand_x(), field->get_rand_y()),
 	hp(default_hp),
-	move_speed(default_speed),
+	velocity({ 0,0 }),
 	decay_speed(default_decay),
 	curr_decay(decay_speed) {		
 }
 
 void Actor::decay() {
-	if(curr_decay == 0) {
-		--hp;
-		curr_decay = decay_speed;
-	} else {
-		--curr_decay;		
-	}
-	if(hp == 0) { kill(); }
+	hp -= default_decay;
 }
 
-int trim(int i) {
+void Actor::grow() {
+	hp += meal_up;
+	hp = std::min(hp, default_hp);
+}
+
+double trim(double i) {
 	if(i != 0 && i > 0) {
 		i/=i;
 	}
@@ -34,56 +35,56 @@ int trim(int i) {
 }
 
 void Actor::take_action() {
-	int speed = move_speed;
-	int gx = x;
-	int gy = y;
-
-	int nx = x;
-	int ny = y;
+	
+	vec2d move{ 0,0 };
 
 	auto& meal = *field->meal;
+	set_goal({x(), y() });
 
 	if(meal.size() > 0) {
 		auto dist = [&](const Grass& g) { 
-			return (g.get_x() - nx)*(g.get_x() - nx) + (g.get_y() - ny) * (g.get_y() - ny);
+			return (g.x() - x())*(g.x() - x()) + (g.y() - y()) * (g.y() - y());
 		};
 
 		auto& g = *std::min_element(meal.begin(), meal.end(), [&](const Grass& l, const Grass& r) {
 			return dist(l) < dist(r);
 		});
-		//set new goal
-		gy = g.get_y();
-		gx = g.get_x();
+		
+		set_goal({ g.x(), g.y() });
+		move = { g.x() - x(), g.y() - y() };
 
-		if(x == gx && y == gy) {
+		if(move.len() <= eps) {
 			g.kill();
+			grow();
 		}
 	}
-
-	while(speed != 0) {
-		nx+=trim(gx - nx);
-		ny+=trim(gy- ny);
-
-		--speed;
+	else {
+		move = -velocity;
 	}
 
-	if (field->is_valid(nx, ny)) {
-		x = nx;
-		y = ny;
-	}	
+	move.normalize();
+	move *= max_acceleration;
+	velocity += move;
+
+	velocity.trim(max_velocity);
+	
+	coor += velocity;
 }
 
 void Actor::random() {
-	int dx = rand() % 10 - 5;
-	int dy = rand() % 10 - 5 ;
+	vec2d goal = { rand() % 10 - 5, rand() % 10 - 5 };
 
-	if (field->is_valid(dx + x, dy + y)) {
-		x += dx;
-		y += dy;
+	if (field->is_valid(goal)) {
+		coor = goal;
 	}	
 }
 
 void Actor::live() {
 	decay();
 	take_action();
+}
+
+bool Actor::is_ok()
+{
+	return hp > 0;
 }

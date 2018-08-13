@@ -1,27 +1,25 @@
 #include "field.h"
-
-
 Field::Field() :
-	length(0),
+	width(0),
 	height(0)
 {
 }
 
 Field::Field(const FieldConf & fcfg) :
-	length(fcfg.x),
+	width(fcfg.x),
 	height(fcfg.y) {
 }
 
 
 
-bool Field::is_valid(size_t x, size_t y) const
+bool Field::is_valid(const vec2d& vec) const
 {
-	return x >= 0 && x < length && y >= 0 && y < height;
+	return vec.x >= 0 && vec.x < width && vec.y >= 0 && vec.y < height;
 }
 
 size_t Field::get_rand_x() const
 {
-	return size_t(rand() % length);
+	return size_t(rand() % width);
 }
 
 size_t Field::get_rand_y() const

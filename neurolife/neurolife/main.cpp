@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <thread>
+#include <ctime>
 
 #include "world.h"
 #include "exceptions.h"
 #include "my_utils.h"
+#include "draw_context.h"
+#include "gui_context.h"
 
 using namespace std;
 
@@ -17,16 +19,18 @@ void wait_key_press() {
 }
 
 int main(int argc, char* argv[]) {
-	try {
-		string config_name = "default.cfg";
+	srand(time(NULL));
+	string config_name = "default.cfg";
 
-		vector<string> args(argv, argv + argc);
-		if(args.size() == 2) {
-			config_name = args[1];
-		}
+	vector<string> args(argv, argv + argc);
+	if (args.size() == 2) {
+		config_name = args[1];
+	}
+
+	try {
 
 		ifstream config_file(config_name.c_str());
-		if(!config_file) {
+		if (!config_file) {
 			throw Error("can't find configuration file");
 		}
 
@@ -34,14 +38,13 @@ int main(int argc, char* argv[]) {
 		config_file >> wcfg; 
 
 		World w;
-		w.init(wcfg);
-		w.start();
+		GUIContext context(1200, 600);
+		//ConsoleContext context(cout);
+		context.init(&w);		
+		w.init(wcfg, &context);
 
-		//std::thread main_t(&World::start, &w);
-		//std::thread control_t(&World::joystick, &w);
-		
-		//main_t.join();
-		//control_t.join();
+		w.start();	
+		w.stop();
 	}
 	catch (Error& e) {
 		cout << e.what() << endl;
@@ -50,7 +53,7 @@ int main(int argc, char* argv[]) {
 		cout << "something bad happened" << endl;
 	}
 
-	wait_key_press();
+	//wait_key_press();
 
 
 	return 0;

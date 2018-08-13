@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="view">
+      <UniqueIdentifier>{c4235bbd-81e7-4fe6-8b89-47645c8acf9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,6 +38,15 @@
     </ClCompile>
     <ClCompile Include="grass.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="console_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="view_model.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +72,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="service_symbols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="view_model.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="vec2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
