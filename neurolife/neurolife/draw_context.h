@@ -3,23 +3,27 @@
 
 using namespace std;
 
-class World;
+class ViewWorld;
 
 class DrawContext {
 public:
 	virtual void draw() = 0;
-	virtual void init(World * world) {
-		w = world;
-	}
+	DrawContext(ViewWorld & view_w):
+		view_w(view_w) {}
+
 	virtual void dipose() {}
 
+	int posx = 0;
+	int posy = 0;
+
 protected:
-	World * w;
+	ViewWorld& view_w;
 };
 
 class ConsoleContext : public DrawContext {
 public:
-	ConsoleContext(ostream& os) :
+	ConsoleContext(ViewWorld & view_w, ostream& os) :
+		DrawContext(view_w),
 		os(os) {}
 
 	void draw() override;

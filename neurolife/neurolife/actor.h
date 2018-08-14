@@ -7,7 +7,7 @@
 
 const double default_decay = 0.5;
 const double max_velocity = 70.1;
-const double max_acceleration = 2;
+const double max_acceleration = 1;
 const int default_hp = 1000;
 const double meal_up = 20;
 const double eps = 100;

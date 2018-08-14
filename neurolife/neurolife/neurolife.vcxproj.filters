@@ -48,6 +48,9 @@
     <ClCompile Include="view_model.cpp">
       <Filter>view</Filter>
     </ClCompile>
+    <ClCompile Include="view_world.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="vec2d.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="view_world.h">
+      <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

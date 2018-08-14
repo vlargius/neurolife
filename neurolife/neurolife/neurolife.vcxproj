@@ -81,6 +81,8 @@
     <IntDir>$(SolutionDir)buld\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)d</TargetName>
     <ReferencePath>$(VC_ReferencesPath_x86);$(SolutionDir)\lib</ReferencePath>
+    <IncludePath>D:\lib\SDL_ttf-4892ed2e6866;D:\lib\SDL2-2.0.8\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\lib\SDL_ttf-4892ed2e6866\VisualC\Win32\Debug;D:\lib\SDL2-2.0.8\VisualC\Win32\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -91,7 +93,7 @@
       <PreprocessorDefinitions>_MBCS;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;OpenGL32.Lib;GlU32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;OpenGL32.Lib;GlU32.Lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,6 +148,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="my_utils.cpp" />
     <ClCompile Include="view_model.cpp" />
+    <ClCompile Include="view_world.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +164,7 @@
     <ClInclude Include="vec2d.h" />
     <ClInclude Include="view_model.h" />
     <ClInclude Include="world.h" />
+    <ClInclude Include="view_world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

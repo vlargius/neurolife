@@ -14,6 +14,8 @@
 #include "actor.h"
 #include "grass.h"
 #include "view_model.h"
+#include "gui_context.h"
+#include "view_world.h"
 
 using namespace std;
 
@@ -35,7 +37,6 @@ class World;
 class World
 {
 public:
-	using M2VM=unordered_map<Creature*, BaseViewModel*>; //model to view model
 	World();
 
 	void init(const WorldConfig& world_cfg, GUIContext * context);
@@ -56,19 +57,18 @@ public:
 	const list<Actor> & get_actors() const { return actors; }
 	const list<Grass> & get_meal() const { return meal; }
 
-	const M2VM & get_views() const { return views; }
-	
 	bool is_meal(size_t x, size_t y) const;
 	bool is_actor(size_t x, size_t y) const;
 
+	ViewWorld& get_view() { return my_view; }
+
 private:
 	DrawContext * context;
+	ViewWorld my_view;
 
 	std::shared_ptr<Field> field;
 	list<Actor> actors;
 	list<Grass> meal;
-
-	M2VM views;
 
 	size_t time_to_live;
 	size_t curr_step;

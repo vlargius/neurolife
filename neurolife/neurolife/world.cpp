@@ -8,8 +8,9 @@
 
 const int dt = 50;
 
-World::World():
-	is_active(false) {}
+World::World() :
+	is_active(false),
+	my_view(*this) {}
 
 
 void World::init(const WorldConfig & world_cfg, GUIContext * context)
@@ -23,14 +24,14 @@ void World::init(const WorldConfig & world_cfg, GUIContext * context)
 	field = std::make_shared<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
-		auto & a = actors.back();	
-		views[&a] = new ViewModel<Actor>(a);
+		auto & a = actors.back();
+		my_view.add(a);
 	}
 
 	for (size_t i = 0; i < world_cfg.grass_count; ++i) {
 		meal.emplace_back(field.get());
 		auto & m = meal.back();
-		views[&m] = new ViewModel<Grass>(m);
+		my_view.add(m);
 	}
 
 	field->actors = &actors;
@@ -53,6 +54,9 @@ void World::start_mt() {
 	control_t.join();
 }
 
+
+const int cam_speed = 15;
+
 void World::handle_event() {
 	while (SDL_PollEvent(&e)) {
 		//If user closes the window
@@ -63,15 +67,19 @@ void World::handle_event() {
 		if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
+				context->posx += cam_speed;
 				cout << "l";
 				break;
 			case SDLK_RIGHT:
+				context->posx -= cam_speed;
 				cout << "r";
 				break;
 			case SDLK_UP:
+				context->posy += cam_speed;
 				cout << "u";
 				break;
 			case SDLK_DOWN:
+				context->posy -= cam_speed;
 				cout << "d";
 				break;
 			case SDLK_ESCAPE:
@@ -133,17 +141,17 @@ void World::tick(size_t s)
 		a.live();
 	}
 
-	//erase from views
-	for (auto it = views.begin(); it != views.end(); /* nothing */) {
-		if (!it->first->is_ok()) {
-			it->second->~BaseViewModel();
-			it = views.erase(it);
-		} else {
-			++it;
+	for (auto& a : actors) {
+		if (!a.is_ok()) {
+			my_view.remove(a);
 		}
 	}
 
-	//erase models
+	for (auto & m : meal) {
+		if (!m.is_ok()) {
+			my_view.remove(m);
+		}
+	}
 	actors.remove_if([](Actor & a){ return !a.is_ok();});
 	meal.remove_if([](Grass & g){ return !g.is_ok();});
 }
@@ -170,7 +178,6 @@ inline bool World::any_of(const list<T>& l, size_t x, size_t y) const
 	});
 }
 
-void World::draw()
-{
-	context->draw();
+void World::draw() {
+	my_view.render();
 }

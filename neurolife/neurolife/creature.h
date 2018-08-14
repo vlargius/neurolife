@@ -7,8 +7,8 @@ class Creature
 {
 public:
 	Creature(Field * filed);
-
 	Creature(Field * filed, double x, double y);
+	virtual ~Creature() {}
 
 	void kill() { is_alive = false; }
 	virtual bool is_ok() {return is_alive; }

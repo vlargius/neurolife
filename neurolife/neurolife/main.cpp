@@ -28,7 +28,9 @@ int main(int argc, char* argv[]) {
 	}
 
 	try {
-
+		TTF_Init();
+		GUIContext::current_dir = get_font_path(args[0]);
+		
 		ifstream config_file(config_name.c_str());
 		if (!config_file) {
 			throw Error("can't find configuration file");
@@ -38,13 +40,14 @@ int main(int argc, char* argv[]) {
 		config_file >> wcfg; 
 
 		World w;
-		GUIContext context(1200, 600);
-		//ConsoleContext context(cout);
-		context.init(&w);		
+		GUIContext context(w.get_view(), 1200, 600);
+		//ConsoleContext context(cout, w);		
 		w.init(wcfg, &context);
 
 		w.start();	
 		w.stop();
+
+		TTF_Quit();
 	}
 	catch (Error& e) {
 		cout << e.what() << endl;

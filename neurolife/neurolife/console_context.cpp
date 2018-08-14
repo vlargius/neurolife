@@ -9,14 +9,13 @@
 using namespace std;
 
 void ConsoleContext::draw() {
-	if (w != nullptr) {
 		my::clear();
 		draw_head();
 		draw_field();
-	}
 }
 
 void ConsoleContext::draw_head() const {
+	const World *w = &view_w.get_world();
 	os << "[setp: " << w->get_curr_step() << "] "
 		<< "[state: " << w->get_state() << "] "
 		<< "[hp:" << w->get_actors().front().get_hp() << "]"
@@ -24,6 +23,7 @@ void ConsoleContext::draw_head() const {
 }
 
 void ConsoleContext::draw_field() const {
+	const World *w = &view_w.get_world();
 	const Field * field = w->get_field();
 	for (size_t i = 0; i < field->get_width(); ++i) {
 		for (size_t j = 0; j < field->get_height(); ++j) {
