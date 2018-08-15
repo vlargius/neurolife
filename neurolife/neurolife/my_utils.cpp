@@ -41,3 +41,12 @@ namespace my {
 	}
 
 }
+
+string get_font_path(const string& path_to_bin) {
+	auto ch = path_to_bin.end();
+	ch--;
+	while (ch != path_to_bin.begin() && *ch != '\\') {
+		ch--;
+	}
+	return string(path_to_bin.begin(), ch) + "\\fonts\\";
+}

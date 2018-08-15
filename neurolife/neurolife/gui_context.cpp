@@ -26,10 +26,11 @@ GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height):
 
 
 	SDL_CreateWindowAndRenderer(width, height, 0, &window, &render);
+	xs.target = width;
+	ys.target = height;
 }
 
-GUIContext::~GUIContext()
-{
+GUIContext::~GUIContext() {
 	TTF_CloseFont(font);
 
 	TTF_CloseFont(font);
@@ -169,7 +170,6 @@ void GUIContext::point(int x, int y)
 }
 
 void GUIContext::clear() {
-	SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
 	SDL_RenderClear(render);
 }
 

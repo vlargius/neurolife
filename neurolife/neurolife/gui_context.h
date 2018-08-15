@@ -9,6 +9,22 @@
 
 #include "draw_context.h"
 
+class Scale {
+public:
+
+	double operator()(int x) {
+		return  (x-source/2) /source * target *scale + target/2 + pos;
+	}
+
+	double scale = 1;
+	double pos = 0;
+
+	double target;
+	double source;
+
+protected:
+};
+
 struct Point {
 	int x;
 	int y;
@@ -49,11 +65,22 @@ public:
 	void clear();
 	void present();
 
+	double & scale() {
+		xs.scale = current_scale;
+		ys.scale = current_scale;
+		return current_scale;
+	}
+
+	Scale xs;
+	Scale ys;
+
 	static string current_dir;
 
 private:
 	int width = 640;
 	int height = 480;
+
+	double current_scale = 1;
 
 	Color c;
 	TTF_Font * font;
@@ -61,11 +88,3 @@ private:
 	void point(int x, int y);
 };
 
-inline string get_font_path(const string& path_to_bin) {
-	auto ch = path_to_bin.end();
-	ch--;
-	while (ch != path_to_bin.begin() && *ch != '\\') {
-		ch--;
-	}
-	return string(path_to_bin.begin(), ch) + "\\fonts\\";
-}

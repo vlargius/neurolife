@@ -4,6 +4,7 @@
 #include "actor.h"
 #include "my_utils.h"
 #include "grass.h"
+#include "constants.h"
 
 #undef min;
 
@@ -11,8 +12,8 @@ Actor::Actor(Field * field) :
 	Creature(field, field->get_rand_x(), field->get_rand_y()),
 	hp(default_hp),
 	velocity({ 0,0 }),
-	decay_speed(default_decay),
-	curr_decay(decay_speed) {		
+	decay_speed(default_decay)
+{
 }
 
 void Actor::decay() {
@@ -62,13 +63,16 @@ void Actor::take_action() {
 		move = -velocity;
 	}
 
+//	move = control.get_control();
+
 	move.normalize();
 	move *= max_acceleration;
 	velocity += move;
 
 	velocity.trim(max_velocity);
 	
-	coor += velocity;
+	//if(field->is_valid(coor+velocity))
+		coor += velocity;
 }
 
 void Actor::random() {

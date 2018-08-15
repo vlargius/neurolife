@@ -2,8 +2,10 @@
 
 #include "view_world.h"
 #include "world.h"
+#include <iomanip>
 
 void ViewWorld::render() {
+		c->set_color(40, 40, 40);
 		c->clear();
 		for (auto v : model2vew) {
 			v.second->render();
@@ -29,9 +31,10 @@ void ViewWorld::remove(const Creature & c) {
 
 
 void ViewWorld::draw_statistics() {
-	stringstream s1, s2;
+	stringstream s1, s2, s3;
 	s1 << "[ actors: " << w.get_actors().size() << " ]";
 	s2 << "[ meal: " << w.get_meal().size() << " ]";
+	s3 << "[ scale: " << setprecision(3) << c->scale() << " ]";
 
 	const Field * f = w.get_field();
 
@@ -41,4 +44,5 @@ void ViewWorld::draw_statistics() {
 
 	c->draw_text({ x, y }, s1.str());
 	c->draw_text({ x, y + 30 }, s2.str());
+	c->draw_text({ x, y + 60 }, s3.str());
 }

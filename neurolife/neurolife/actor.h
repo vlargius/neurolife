@@ -4,6 +4,7 @@
 
 #include "field.h"
 #include "creature.h"
+#include "controller.h"
 
 const double default_decay = 0.5;
 const double max_velocity = 70.1;
@@ -29,13 +30,12 @@ public:
 
 private:
 	int hp;
-
 	vec2d velocity;
-
 	vec2d goal;
 
 	int decay_speed;
-	int curr_decay;
+
+	Controller control;
 
 	void take_action();	
 	void decay();

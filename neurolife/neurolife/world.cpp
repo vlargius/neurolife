@@ -5,8 +5,8 @@
 #include "exceptions.h"
 #include "service_symbols.h"
 #include "my_utils.h"
+#include "constants.h"
 
-const int dt = 50;
 
 World::World() :
 	is_active(false),
@@ -36,6 +36,9 @@ void World::init(const WorldConfig & world_cfg, GUIContext * context)
 
 	field->actors = &actors;
 	field->meal = &meal;
+
+	context->xs.source = field->get_width();
+	context->ys.source = field->get_height();
 }
 
 void World::start() {
@@ -55,7 +58,7 @@ void World::start_mt() {
 }
 
 
-const int cam_speed = 15;
+
 
 void World::handle_event() {
 	while (SDL_PollEvent(&e)) {
@@ -67,19 +70,19 @@ void World::handle_event() {
 		if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym) {
 			case SDLK_LEFT:
-				context->posx += cam_speed;
+				context->xs.pos += cam_speed;
 				cout << "l";
 				break;
 			case SDLK_RIGHT:
-				context->posx -= cam_speed;
+				context->xs.pos -= cam_speed;
 				cout << "r";
 				break;
 			case SDLK_UP:
-				context->posy += cam_speed;
+				context->ys.pos += cam_speed;
 				cout << "u";
 				break;
 			case SDLK_DOWN:
-				context->posy -= cam_speed;
+				context->ys.pos -= cam_speed;
 				cout << "d";
 				break;
 			case SDLK_ESCAPE:
@@ -88,10 +91,18 @@ void World::handle_event() {
 				break;
 			}
 		}
-		//If user clicks the mouse
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			is_active = false;
+		if (e.type == SDL_MOUSEWHEEL)
+		{
+			if (e.wheel.y > 0)
+			{
+				context->scale() *= scroll_speed;
+			}
+			else if (e.wheel.y < 0)
+			{
+				context->scale() /= scroll_speed;
+			}
 		}
+		
 
 		
 	}

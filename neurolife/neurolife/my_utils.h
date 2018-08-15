@@ -62,3 +62,5 @@ inline std::ostream & operator<<(std::ostream & os, const my::color & c)
 	#endif
 	
 }
+
+string get_font_path(const string& path_to_bin);

@@ -14,16 +14,17 @@ public:
 	virtual  ~BaseViewModel() {
 	}
 
+	double elsize() const;
+
 protected:
 	
 };
-
 
 template<class T>
 class ViewModel : public BaseViewModel
 {
 public:
-	ViewModel(const T& obj) :
+	ViewModel(const T& obj):
 		model(obj) {}
 	void render() override;
 

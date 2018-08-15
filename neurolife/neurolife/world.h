@@ -63,7 +63,7 @@ public:
 	ViewWorld& get_view() { return my_view; }
 
 private:
-	DrawContext * context;
+	GUIContext * context;
 	ViewWorld my_view;
 
 	std::shared_ptr<Field> field;

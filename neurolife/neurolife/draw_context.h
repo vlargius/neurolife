@@ -13,9 +13,6 @@ public:
 
 	virtual void dipose() {}
 
-	int posx = 0;
-	int posy = 0;
-
 protected:
 	ViewWorld& view_w;
 };
