@@ -9,12 +9,14 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="view">
       <UniqueIdentifier>{c4235bbd-81e7-4fe6-8b89-47645c8acf9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{099d0503-a81a-4bc5-ac34-059975211a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{503a390f-58dd-4a74-9090-220b06e06b68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +49,18 @@
     </ClCompile>
     <ClCompile Include="view_model.cpp">
       <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="view_world.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="buckets.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,5 +100,28 @@
     <ClInclude Include="vec2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="view_world.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="network.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buckets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_constant.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>config</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\bin\default.cfg">
+      <Filter>config</Filter>
+    </None>
   </ItemGroup>
 </Project>

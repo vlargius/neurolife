@@ -7,8 +7,8 @@ class Creature
 {
 public:
 	Creature(Field * filed);
-
 	Creature(Field * filed, double x, double y);
+	virtual ~Creature() {}
 
 	void kill() { is_alive = false; }
 	virtual bool is_ok() {return is_alive; }
@@ -17,6 +17,8 @@ public:
 	double y() const { return coor.y; }
 
 	const Field* get_field() const { return field; }
+
+	mutable bool is_in_bucket = false;
 
 protected:
 

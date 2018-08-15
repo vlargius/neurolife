@@ -25,8 +25,6 @@ public:
 	list<Actor> * actors;
 	list<Grass> * meal;
 
-	//Grass* get_meal() { return meal-> }
-
 	Field();
 	Field(const FieldConf& fcfg);
 	bool is_valid(const vec2d& vec) const;
@@ -36,6 +34,8 @@ public:
 
 	size_t get_rand_x() const;
 	size_t get_rand_y() const;
+
+	const list<Grass> get_meal() const;
 
 private:
 	size_t width;
