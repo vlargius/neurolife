@@ -12,7 +12,7 @@
 class Scale {
 public:
 
-	double operator()(int x) {
+	int operator()(double x) {
 		return  (x-source/2) /source * target *scale + target/2 + pos;
 	}
 
@@ -57,6 +57,7 @@ public:
 	void draw_arrow(const Point& p1, const Point& p2);
 
 	void draw_rect(const Point& center, int w, int h, bool filled = false);
+	void draw_rect(const Point& tl, const Point& dr);
 	void draw_square(const Point& center, int size, bool filled = false);
 
 	void draw_circle(const Point& center, int radius, bool filled = false);

@@ -13,10 +13,7 @@ using namespace std;
 class NetworkInput {
 public:
 
-	NetworkInput(size_t w, size_t h) :
-		width(w),
-		height(h),
-		inputs(w*h) {}
+	NetworkInput(size_t w, size_t h);
 
 	double at(int i) const { return inputs[i]; }
 	double & at(int i) { return inputs[i]; }
@@ -24,8 +21,10 @@ public:
 	double at(int x, int y) const { return inputs[x + y*width]; }
 	double & at(int x, int y) { return inputs[x + y * width]; }
 
-	vector<double> inputs;
+	void norm();
 
+	vector<double> inputs;
+	double length;
 	size_t width;
 	size_t height;
 };

@@ -1,4 +1,7 @@
 #include "field.h"
+
+#include "grass.h"
+
 Field::Field() :
 	width(0),
 	height(0)
@@ -25,4 +28,9 @@ size_t Field::get_rand_x() const
 size_t Field::get_rand_y() const
 {
 	return size_t(rand() % height);
+}
+
+const list<Grass> Field::get_meal() const
+{
+	return *meal;
 }

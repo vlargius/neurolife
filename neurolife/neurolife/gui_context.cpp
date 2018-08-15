@@ -57,15 +57,23 @@ void GUIContext::draw_arrow(const Point & p1, const Point & p2)
 	SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
 }
 
-void GUIContext::draw_rect(const Point & center, int w, int h, bool filled)
+void GUIContext::draw_rect(const Point & lft_tp, int w, int h, bool filled)
 {
-	SDL_Rect r{ center.x, center.y, w, h };
+	SDL_Rect r{ lft_tp.x, lft_tp.y, w, h };
 	if (!filled) {
 		SDL_RenderDrawRect(render, &r);
 	}
 	else {
 		SDL_RenderFillRect(render, &r);
 	}
+}
+
+void GUIContext::draw_rect(const Point& tl, const Point& dr)
+{
+	SDL_RenderDrawLine(render, tl.x, tl.y, dr.x, tl.y);
+	SDL_RenderDrawLine(render, dr.x, tl.y, dr.x, dr.y);
+	SDL_RenderDrawLine(render, dr.x, dr.y, tl.x, dr.y);
+	SDL_RenderDrawLine(render, tl.x, dr.y, tl.x, tl.y);
 }
 
 void GUIContext::draw_square(const Point & center, int size, bool filled)
@@ -150,18 +158,24 @@ void GUIContext::draw_text(const Point & coor, const string text)
 {
 	static const int letter_w = 10;
 	SDL_Color White = { 255, 255, 255 }; 
+	
+	if (font) {
 
-	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text.c_str(), White); 
+		SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text.c_str(), White);
 
-	SDL_Texture* Message = SDL_CreateTextureFromSurface(render, surfaceMessage); 
+		SDL_Texture* Message = SDL_CreateTextureFromSurface(render, surfaceMessage);
 
-	SDL_Rect Message_rect{ coor.x, coor.y, letter_w*text.size(), 20};
-						
-	SDL_RenderCopy(render, Message, NULL, &Message_rect); 
-	SDL_DestroyTexture(Message);
-	SDL_FreeSurface(surfaceMessage);
+		SDL_Rect Message_rect{ coor.x, coor.y, letter_w*text.size(), 20 };
 
-	SDL_RenderPresent(render);
+		SDL_RenderCopy(render, Message, NULL, &Message_rect);
+		SDL_DestroyTexture(Message);
+		SDL_FreeSurface(surfaceMessage);
+
+		SDL_RenderPresent(render);
+	}
+	else {
+		cout << "cant open font" << endl;
+	}
 }
 
 void GUIContext::point(int x, int y)

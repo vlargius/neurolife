@@ -14,7 +14,7 @@ public:
 	virtual  ~BaseViewModel() {
 	}
 
-	double elsize() const;
+	int elsize() const;
 
 protected:
 	

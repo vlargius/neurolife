@@ -18,6 +18,8 @@ public:
 
 	const Field* get_field() const { return field; }
 
+	mutable bool is_in_bucket = false;
+
 protected:
 
 	vec2d coor;

@@ -6,6 +6,5 @@ class Grass : public Creature {
 public:
 
 	Grass(Field * field);
-
 };
 

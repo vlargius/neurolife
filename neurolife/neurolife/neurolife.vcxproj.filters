@@ -109,11 +109,14 @@
     <ClInclude Include="controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="buckets.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_constant.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

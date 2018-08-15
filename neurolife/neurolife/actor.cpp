@@ -12,7 +12,8 @@ Actor::Actor(Field * field) :
 	Creature(field, field->get_rand_x(), field->get_rand_y()),
 	hp(default_hp),
 	velocity({ 0,0 }),
-	decay_speed(default_decay)
+	decay_speed(default_decay),
+	control(this, { defautl_bucket_count, defautl_bucket_count, default_bucket_size })
 {
 }
 
@@ -60,9 +61,10 @@ void Actor::take_action() {
 		}
 	}
 	else {
-		move = -velocity;
+		velocity = { 0, 0 };
+		move = { 0, 0 };
 	}
-
+	control.get_control();
 //	move = control.get_control();
 
 	move.normalize();
