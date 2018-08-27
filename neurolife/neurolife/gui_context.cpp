@@ -24,8 +24,16 @@ GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height):
 	string font_paht = current_dir + "arial.ttf";
 	font = TTF_OpenFont(font_paht.c_str(), 80);
 
+	window = SDL_CreateWindow("Neurolife",
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
+		width,
+		height,
+		0
+	);
 
-	SDL_CreateWindowAndRenderer(width, height, 0, &window, &render);
+	render = SDL_CreateRenderer(window, -1, 0);
+
 	xs.target = width;
 	ys.target = height;
 }
@@ -171,7 +179,6 @@ void GUIContext::draw_text(const Point & coor, const string text)
 		SDL_DestroyTexture(Message);
 		SDL_FreeSurface(surfaceMessage);
 
-		SDL_RenderPresent(render);
 	}
 	else {
 		cout << "cant open font" << endl;
