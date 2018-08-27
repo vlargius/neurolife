@@ -7,6 +7,7 @@ struct vec2d {
 	
 	void normalize() {
 		double l = sqrt(x*x + y * y);
+		if (l == 0) return;
 		x = x / l;
 		y = y / l;
 	}

@@ -1,12 +1,12 @@
 #include <algorithm>
 #include <stdlib.h>
+#include <ratio>
+#include <chrono>
 
 #include "actor.h"
 #include "my_utils.h"
 #include "grass.h"
 #include "constants.h"
-
-#undef min;
 
 Actor::Actor(Field * field) :
 	Creature(field, field->get_rand_x(), field->get_rand_y()),
@@ -23,7 +23,7 @@ void Actor::decay() {
 
 void Actor::grow() {
 	hp += meal_up;
-	hp = std::min(hp, default_hp);
+	hp = min(hp, default_hp);
 }
 
 double trim(double i) {
@@ -36,7 +36,7 @@ double trim(double i) {
 	return i;
 }
 
-void Actor::take_action() {
+void Actor::take_action(double dt) {
 	
 	vec2d move{ 0,0 };
 
@@ -61,8 +61,7 @@ void Actor::take_action() {
 		}
 	}
 	else {
-		velocity = { 0, 0 };
-		move = { 0, 0 };
+		velocity = { 0,0 };
 	}
 	control.get_control();
 //	move = control.get_control();
@@ -74,7 +73,7 @@ void Actor::take_action() {
 	velocity.trim(max_velocity);
 	
 	//if(field->is_valid(coor+velocity))
-		coor += velocity;
+		coor += velocity*(dt*1/100.);
 }
 
 void Actor::random() {
@@ -85,9 +84,9 @@ void Actor::random() {
 	}	
 }
 
-void Actor::live() {
+void Actor::live(double dt) {
 	decay();
-	take_action();
+	take_action(dt);
 }
 
 bool Actor::is_ok()

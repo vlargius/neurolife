@@ -65,7 +65,7 @@ void ViewModel<Actor>::render() {
 		stringstream ss;
 		ss << setprecision(3) << model.get_controller().get_input().length;
 
-		c->draw_text({ x,y+20 }, ss.str());
+		//c->draw_text({ x,y+20 }, ss.str());
 	}
 }
 

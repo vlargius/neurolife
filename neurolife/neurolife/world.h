@@ -24,13 +24,12 @@ struct WorldConfig {
 	unsigned	actor_count;
 	unsigned	grass_count;
 	size_t		ttl;
+	size_t		step_size;
 };
 
 
-inline istream& operator>>(istream& is, WorldConfig & w_cgf) {
-	is >> w_cgf.field_cfg >> w_cgf.actor_count >> w_cgf.grass_count>> w_cgf.ttl;
-	return is;
-}
+istream& operator>>(istream& is, WorldConfig & w_cgf);
+
 class World;
 
 
@@ -47,7 +46,7 @@ public:
 	void pause();
 	void resume();
 
-	void tick(size_t s = 1);
+	void tick(double dt);
 	void draw();
 
 	string get_state() const;
@@ -72,6 +71,7 @@ private:
 
 	size_t time_to_live;
 	size_t curr_step;
+	size_t step_size;
 
 	std::mutex com_lock;
 

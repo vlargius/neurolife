@@ -12,10 +12,6 @@ struct FieldConf {
 	size_t y;
 };
 
-inline istream& operator>>(istream& is, FieldConf & f_cgf) {
-	is >> f_cgf.x >> f_cgf.y;
-	return is;
-}
 class Actor;
 class Grass;
 

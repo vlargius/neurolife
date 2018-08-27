@@ -1,6 +1,8 @@
-#include "field.h"
+#include <string>
 
+#include "field.h"
 #include "grass.h"
+#include "constants.h"
 
 Field::Field() :
 	width(0),

@@ -14,7 +14,7 @@ class Actor : public Creature
 public:
 	Actor(Field * filed);
 
-	void live();
+	void live(double dt);
 	int get_hp() const { return hp; }
 
 	bool is_ok() override;
@@ -33,7 +33,7 @@ private:
 
 	Controller control;
 
-	void take_action();	
+	void take_action(double dt);	
 	void decay();
 	void grow();
 
