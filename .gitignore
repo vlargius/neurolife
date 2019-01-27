@@ -2,6 +2,8 @@
 
 /neurolife/.vs/neurolife/v15
 /neurolife/buld
+/neurolife/bin
+
 *.ilk
 *.pdb
 *.iobj
