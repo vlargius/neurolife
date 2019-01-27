@@ -15,14 +15,11 @@ World::World() :
 	my_view(*this) {}
 
 
-void World::init(const WorldConfig & world_cfg, GUIContext * context)
+void World::init(const WorldConfig & world_cfg)
 {
 	step_size = world_cfg.step_size;
-	this->context = context;
 	time_to_live = world_cfg.ttl;
 	curr_step = 0;
-
-	BaseViewModel::c = context;
 
 	field = std::make_shared<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
@@ -39,9 +36,6 @@ void World::init(const WorldConfig & world_cfg, GUIContext * context)
 
 	field->actors = &actors;
 	field->meal = &meal;
-
-	context->xs.source = field->get_width();
-	context->ys.source = field->get_height();
 }
 
 void World::start() {
@@ -64,51 +58,51 @@ void World::start_mt() {
 
 
 void World::handle_event() {
-	while (SDL_PollEvent(&e)) {
-		//If user closes the window
-		if (e.type == SDL_QUIT) {
-			is_active = false;
-		}
-		//If user presses any key
-		if (e.type == SDL_KEYDOWN) {
-			switch (e.key.keysym.sym) {
-			case SDLK_LEFT:
-				context->xs.pos += cam_speed;
-				cout << "l";
-				break;
-			case SDLK_RIGHT:
-				context->xs.pos -= cam_speed;
-				cout << "r";
-				break;
-			case SDLK_UP:
-				context->ys.pos += cam_speed;
-				cout << "u";
-				break;
-			case SDLK_DOWN:
-				context->ys.pos -= cam_speed;
-				cout << "d";
-				break;
-			case SDLK_ESCAPE:
-				is_active = false;
-			default:
-				break;
-			}
-		}
-		if (e.type == SDL_MOUSEWHEEL)
-		{
-			if (e.wheel.y > 0)
-			{
-				context->scale() *= scroll_speed;
-			}
-			else if (e.wheel.y < 0)
-			{
-				context->scale() /= scroll_speed;
-			}
-		}
-		
+	//while (SDL_PollEvent(&e)) {
+	//	//If user closes the window
+	//	if (e.type == SDL_QUIT) {
+	//		is_active = false;
+	//	}
+	//	//If user presses any key
+	//	if (e.type == SDL_KEYDOWN) {
+	//		switch (e.key.keysym.sym) {
+	//		case SDLK_LEFT:
+	//			context->xs.pos += cam_speed;
+	//			cout << "l";
+	//			break;
+	//		case SDLK_RIGHT:
+	//			context->xs.pos -= cam_speed;
+	//			cout << "r";
+	//			break;
+	//		case SDLK_UP:
+	//			context->ys.pos += cam_speed;
+	//			cout << "u";
+	//			break;
+	//		case SDLK_DOWN:
+	//			context->ys.pos -= cam_speed;
+	//			cout << "d";
+	//			break;
+	//		case SDLK_ESCAPE:
+	//			is_active = false;
+	//		default:
+	//			break;
+	//		}
+	//	}
+	//	if (e.type == SDL_MOUSEWHEEL)
+	//	{
+	//		if (e.wheel.y > 0)
+	//		{
+	//			context->scale() *= scroll_speed;
+	//		}
+	//		else if (e.wheel.y < 0)
+	//		{
+	//			context->scale() /= scroll_speed;
+	//		}
+	//	}
+	//	
 
-		
-	}
+	//	
+	//}
 }
 
 void World::process()

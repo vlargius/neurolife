@@ -3,21 +3,22 @@
 
 #include "gui_context.h"
 #include "world.h"
-#include <SDL.h>
+//#include <SDL.h>
 
 using namespace std;
 
 string GUIContext::current_dir;
 
 
-GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height):
+GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height, const string& fontPath):
 	DrawContext(view_w),
 	width(width),
-	height(height) {
-	
+	height(height)
+{
+	GUIContext::current_dir = fontPath;
 	init_SDL();
 
-	if (TTF_Init() == -1) {
+	/*if (TTF_Init() == -1) {
 		printf("TTF_Init: %s\n", TTF_GetError());
 		exit(2);
 	}
@@ -32,67 +33,63 @@ GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height):
 		0
 	);
 
-	render = SDL_CreateRenderer(window, -1, 0);
+	render = SDL_CreateRenderer(window, -1, 0);*/
 
 	xs.target = width;
 	ys.target = height;
 }
 
 GUIContext::~GUIContext() {
-	TTF_CloseFont(font);
+	//TTF_CloseFont(font);
 
-	TTF_CloseFont(font);
-	SDL_DestroyRenderer(render);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	//TTF_CloseFont(font);
+	//SDL_DestroyRenderer(render);
+	//SDL_DestroyWindow(window);
+	//SDL_Quit();
 }
 
 
 void GUIContext::init_SDL()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+	/*if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-	}
+	}*/
 }
 
 void GUIContext::set_color(int r, int g, int b) {
 	c = { r, g, b };
-	SDL_SetRenderDrawColor(render, r, g, b, 255);
+	//SDL_SetRenderDrawColor(render, r, g, b, 255);
 }
 
-void GUIContext::draw_arrow(const Point & p1, const Point & p2)
-{
-	SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
+void GUIContext::draw_arrow(const Point & p1, const Point & p2) {
+	//SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
 }
 
-void GUIContext::draw_rect(const Point & lft_tp, int w, int h, bool filled)
-{
-	SDL_Rect r{ lft_tp.x, lft_tp.y, w, h };
-	if (!filled) {
-		SDL_RenderDrawRect(render, &r);
-	}
-	else {
-		SDL_RenderFillRect(render, &r);
-	}
+void GUIContext::draw_rect(const Point & lft_tp, int w, int h, bool filled) {
+	//SDL_Rect r{ lft_tp.x, lft_tp.y, w, h };
+	//if (!filled) {
+	//	//SDL_RenderDrawRect(render, &r);
+	//}
+	//else {
+	//	//SDL_RenderFillRect(render, &r);
+	//}
 }
 
-void GUIContext::draw_rect(const Point& tl, const Point& dr)
-{
-	SDL_RenderDrawLine(render, tl.x, tl.y, dr.x, tl.y);
+void GUIContext::draw_rect(const Point& tl, const Point& dr) {
+	/*SDL_RenderDrawLine(render, tl.x, tl.y, dr.x, tl.y);
 	SDL_RenderDrawLine(render, dr.x, tl.y, dr.x, dr.y);
 	SDL_RenderDrawLine(render, dr.x, dr.y, tl.x, dr.y);
-	SDL_RenderDrawLine(render, tl.x, dr.y, tl.x, tl.y);
+	SDL_RenderDrawLine(render, tl.x, dr.y, tl.x, tl.y);*/
 }
 
-void GUIContext::draw_square(const Point & center, int size, bool filled)
-{
-	SDL_Rect r{ center.x - size, center.y - size, size * 2, size * 2 };
-	if (!filled) {
-		SDL_RenderDrawRect(render, &r);
-	}
-	else {
-		SDL_RenderFillRect(render, &r);
-	}
+void GUIContext::draw_square(const Point & center, int size, bool filled) {
+	//SDL_Rect r{ center.x - size, center.y - size, size * 2, size * 2 };
+	//if (!filled) {
+	//	//SDL_RenderDrawRect(render, &r);
+	//}
+	//else {
+	//	//SDL_RenderFillRect(render, &r);
+	//}
 }
 
 
@@ -165,9 +162,9 @@ void GUIContext::draw_circle(const Point & center, int radius, bool filled)
 void GUIContext::draw_text(const Point & coor, const string text)
 {
 	static const int letter_w = 10;
-	SDL_Color White = { 255, 255, 255 }; 
+	//SDL_Color White = { 255, 255, 255 }; 
 	
-	if (font) {
+	/*if (font) {
 
 		SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text.c_str(), White);
 
@@ -182,20 +179,18 @@ void GUIContext::draw_text(const Point & coor, const string text)
 	}
 	else {
 		cout << "cant open font" << endl;
-	}
+	}*/
 }
 
-void GUIContext::point(int x, int y)
-{
-	SDL_RenderDrawPoint(render, x, y);
+void GUIContext::point(int x, int y) {
+	//SDL_RenderDrawPoint(render, x, y);
 }
 
 void GUIContext::clear() {
-	SDL_RenderClear(render);
+	//SDL_RenderClear(render);
 }
 
-void GUIContext::present()
-{
-	SDL_RenderPresent(render);
+void GUIContext::present() {
+	//SDL_RenderPresent(render);
 }
 

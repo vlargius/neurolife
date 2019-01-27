@@ -38,7 +38,7 @@ class World
 public:
 	World();
 
-	void init(const WorldConfig& world_cfg, GUIContext * context);
+	void init(const WorldConfig& world_cfg);
 
 	void start();
 	void stop();
@@ -62,7 +62,6 @@ public:
 	ViewWorld& get_view() { return my_view; }
 
 private:
-	GUIContext * context;
 	ViewWorld my_view;
 
 	std::shared_ptr<Field> field;
@@ -77,7 +76,7 @@ private:
 
 	bool is_active;
 	std::condition_variable cond;
-	SDL_Event e;
+	//SDL_Event e;
 
 	void handle_event();
 	void process();

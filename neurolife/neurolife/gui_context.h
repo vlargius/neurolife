@@ -2,10 +2,10 @@
 
 #include <string>
 
-#include <SDL_ttf.h>
-#include <SDL.h>
-#undef main
-#include <SDL_main.h>
+//#include <SDL_ttf.h>
+//#include <SDL.h>
+//#undef main
+//#include <SDL_main.h>
 
 #include "draw_context.h"
 
@@ -38,15 +38,15 @@ public:
 		int b;
 	};
 
-	GUIContext(ViewWorld & view_w, size_t width, size_t height);
+	GUIContext(ViewWorld & view_w, size_t width, size_t height, const string& font_path);
 	~GUIContext();
 
 	void draw() override {}
 
 	static void init_SDL();
 
-	SDL_Window *window;
-	SDL_Renderer *render;
+	//SDL_Window *window;
+	//SDL_Renderer *render;
 
 	int get_width() { return width; }
 	int get_height() { return height; }
@@ -84,7 +84,7 @@ private:
 	double current_scale = 1;
 
 	Color c;
-	TTF_Font * font;
+	//TTF_Font * font;
 
 	void point(int x, int y);
 };
