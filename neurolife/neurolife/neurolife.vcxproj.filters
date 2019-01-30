@@ -62,6 +62,9 @@
     <ClCompile Include="network.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="updater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world.h">
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="network.h">
       <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="updater.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

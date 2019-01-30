@@ -6,14 +6,13 @@
 
 class World;
 
-class ViewWorld : public BaseViewModel {
+class ViewWorld {
 public:
-	using M2VM = unordered_map<const Creature*, BaseViewModel*>; //model to view model
 
 	ViewWorld(World & w) :
 		w(w) {}
 
-	void render() override;
+	void render();
 
 	void add(const Grass& g);
 	void add(const Actor& a);
@@ -24,7 +23,6 @@ public:
 
 protected:
 	World & w;
-	M2VM model2vew;
 
 	void draw_statistics();
 };

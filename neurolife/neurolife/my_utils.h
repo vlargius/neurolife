@@ -13,7 +13,7 @@
 
 using std::string;
 
-namespace my {
+namespace utils {
 	void sleep(int sleepMs);
 
 	void clear();
@@ -52,7 +52,7 @@ namespace my {
 #endif
 }
 
-inline std::ostream & operator<<(std::ostream & os, const my::color & c)
+inline std::ostream & operator<<(std::ostream & os, const utils::color & c)
 {
 	#ifdef LINUX
 		return c.set(os);

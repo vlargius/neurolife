@@ -9,7 +9,7 @@ class BaseViewModel
 public:
 	virtual void render() {}
 
-	static GUIContext * c;
+//	static GUIContext * c;
 
 	virtual  ~BaseViewModel() {
 	}

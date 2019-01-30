@@ -111,7 +111,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;OpenGL32.Lib;GlU32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,6 +157,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="my_utils.cpp" />
     <ClCompile Include="network.cpp" />
+    <ClCompile Include="updater.cpp" />
     <ClCompile Include="view_model.cpp" />
     <ClCompile Include="view_world.cpp" />
     <ClCompile Include="world.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="my_utils.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="service_symbols.h" />
+    <ClInclude Include="updater.h" />
     <ClInclude Include="vec2d.h" />
     <ClInclude Include="view_model.h" />
     <ClInclude Include="world.h" />

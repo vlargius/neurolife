@@ -10,9 +10,7 @@
 #include "constants.h"
 
 
-World::World() :
-	is_active(false),
-	my_view(*this) {}
+World::World() {}
 
 
 void World::init(const WorldConfig & world_cfg)
@@ -24,18 +22,18 @@ void World::init(const WorldConfig & world_cfg)
 	field = std::make_shared<Field>(world_cfg.field_cfg);
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		actors.emplace_back(field.get());
-		auto & a = actors.back();
-		my_view.add(a);
 	}
-
+				
 	for (size_t i = 0; i < world_cfg.grass_count; ++i) {
 		meal.emplace_back(field.get());
-		auto & m = meal.back();
-		my_view.add(m);
 	}
 
 	field->actors = &actors;
 	field->meal = &meal;
+}
+
+bool World::isAlive() {
+	return time_to_live > 0;
 }
 
 void World::start() {
@@ -105,44 +103,28 @@ void World::handle_event() {
 	//}
 }
 
-void World::process()
-{
-	is_active = true;
-	chrono::steady_clock::time_point from, to;
+void World::process() {
+	/*chrono::steady_clock::time_point from, to;
 	
-	for (size_t i = 0; i < time_to_live && is_active; ++i) {
+	for (size_t i = 0; i < time_to_live; ++i) {
 		while (!is_active) {
-			draw();
 			std::unique_lock<std::mutex> lock(com_lock);
 			cond.wait(lock);
 		}
 		double dt = chrono::duration_cast<chrono::milliseconds>(to - from).count();
 		from = chrono::steady_clock::now();
 		tick(dt);
-		draw();
 
 		handle_event();
 		
 		my::sleep(step_size);
 		to = chrono::steady_clock::now();
 	}
-	cout << "closing" << endl;
+	cout << "closing" << endl;*/
 }
 
 void World::grow()
 {
-}
-
-void World::pause() {
-	std::unique_lock<std::mutex> lock(com_lock);
-	is_active = false;
-	cond.notify_one();
-}
-
-void World::resume() {
-	std::unique_lock<std::mutex> lock(com_lock);
-	is_active = true;
-	cond.notify_one();
 }
 
 void World::tick(double dt)
@@ -152,7 +134,7 @@ void World::tick(double dt)
 		a.live(dt);
 	}
 
-	for (auto& a : actors) {
+	/*for (auto& a : actors) {
 		if (!a.is_ok()) {
 			my_view.remove(a);
 		}
@@ -162,13 +144,9 @@ void World::tick(double dt)
 		if (!m.is_ok()) {
 			my_view.remove(m);
 		}
-	}
+	}*/
 	actors.remove_if([](Actor & a){ return !a.is_ok();});
 	meal.remove_if([](Grass & g){ return !g.is_ok();});
-}
-
-string World::get_state() const {
-	return (is_active ? "active" : "paused");
 }
 
 bool World::is_meal(size_t x, size_t y) const
@@ -189,10 +167,6 @@ inline bool World::any_of(const list<T>& l, size_t x, size_t y) const
 	});
 }
 
-void World::draw() {
-	my_view.render();
-}
-
 istream& operator>>(istream& is, WorldConfig & w_cgf) {
 
 	map<string, int> tags;
@@ -202,11 +176,11 @@ istream& operator>>(istream& is, WorldConfig & w_cgf) {
 		tags[name] = value;
 	}
 
-	w_cgf.field_cfg.x = tags[width_tag];
-	w_cgf.field_cfg.y = tags[width_tag];
-	w_cgf.actor_count = tags[actors_tag];
-	w_cgf.grass_count = tags[grass_tag];
-	w_cgf.ttl = tags[ttl_tag];
-	w_cgf.step_size = tags[step_size_tag];
+	w_cgf.field_cfg.x = tags[tags::width];
+	w_cgf.field_cfg.y = tags[tags::height];
+	w_cgf.actor_count = tags[tags::actors];
+	w_cgf.grass_count = tags[tags::grass];
+	w_cgf.ttl = tags[tags::ttl];
+	w_cgf.step_size = tags[tags::step_size];
 	return is;
 }

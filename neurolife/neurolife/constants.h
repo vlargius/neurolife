@@ -8,9 +8,11 @@ const int defautl_bucket_count = 4;
 
 const double meal_weight = 1;
 
-const char width_tag[] = "width";
-const char height_tag[] = "height";
-const char actors_tag[] = "actors";
-const char grass_tag[] = "grass";
-const char ttl_tag[] = "ttl";
-const char step_size_tag[] = "step_size";
+namespace tags {
+	const char width[] = "width";
+	const char height[] = "height";
+	const char actors[] = "actors";
+	const char grass[] = "grass";
+	const char ttl[] = "ttl";
+	const char step_size[] = "step_size";
+}

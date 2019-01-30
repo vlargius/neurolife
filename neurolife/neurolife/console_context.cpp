@@ -6,44 +6,49 @@
 #include "world.h"
 #include "service_symbols.h"
 
-using namespace std;
-
-void ConsoleContext::draw() {
-		my::clear();
-		draw_head();
-		draw_field();
+CharRender::CharRender(ostream & os) :
+	os(os) {
 }
 
-void ConsoleContext::draw_head() const {
-	const World *w = &view_w.get_world();
-	os << "[setp: " << w->get_curr_step() << "] "
-		<< "[state: " << w->get_state() << "] "
-		<< "[hp:" << w->get_actors().front().get_hp() << "]"
-		<< "[meal: " << w->get_meal().size() << "]" << endl;
+void CharRender::flash(const World& w) {
+		utils::clear();
+		drawHead(w);
+		drawField(w);
 }
 
-void ConsoleContext::draw_field() const {
-	const World *w = &view_w.get_world();
-	const Field * field = w->get_field();
+void CharRender::drawHead(const World& w) const {
+	os << "[setp: " << w.getCurrStep() << "] "
+		<< "[active: " << (w.active() ? "yes" : "no") << "] "
+		<< "[hp:" << w.getActors().front().get_hp() << "]"
+		<< "[meal: " << w.getMeal().size() << "]" << endl;
+}
+
+void CharRender::drawField(const World& w) const {
+
+	auto& ss = os;
+
+	const Field * field = w.getField();
 	for (size_t i = 0; i < field->get_width(); ++i) {
 		for (size_t j = 0; j < field->get_height(); ++j) {
 
-			bool is_grass = w->is_meal(i, j);
-			bool is_actor = w->is_actor(i, j);
+			bool is_grass = w.is_meal(i, j);
+			bool is_actor = w.is_actor(i, j);
 
-			if (is_actor && is_grass) {
-				os << setw(3) << my::color(my::blue) << symb_consuming << my::color(my::white);
+			/*if (is_actor && is_grass) {
+				ss << setw(3) << utils::color(utils::blue) << symb_consuming << utils::color(utils::white);
+			}
+			else*/ 
+			if (is_grass) {
+				ss << setw(3) << utils::color(utils::green) << symb_grass << utils::color(utils::white);
 			}
 			else if (is_actor) {
-				os << setw(3) << my::color(my::red) << symb_actor << my::color(my::white);
-			}
-			else if (is_grass) {
-				os << setw(3) << my::color(my::green) << symb_grass << my::color(my::white);
-			}
-			else {
-				os << setw(3) << symb_empty;
+			ss << setw(3) << utils::color(utils::red) << symb_actor << utils::color(utils::white);
+			} {
+				ss << setw(3) << symb_empty;
 			}
 		}
-		os << endl;
+		ss << endl;
 	}
+
+	//os << ss.str();
 }

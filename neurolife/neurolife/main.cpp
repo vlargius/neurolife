@@ -5,9 +5,9 @@
 
 using namespace std;
 
+#include "updater.h"
 #include "world.h"
 //#include "my_utils.h"
-//#include "draw_context.h"
 //#include "gui_context.h"
 
 #include "exceptions.h"
@@ -32,18 +32,19 @@ int main(int argc, char* argv[]) {
 		ifstream config_file(config_name.c_str());
 		if (!config_file) {
 			throw Error("can't find configuration file");
+			return 0;
 		}
 
 		WorldConfig wcfg;
 		config_file >> wcfg; 
 
-		World w;
-		//GUIContext context(w.get_view(), 1200, 600, get_font_path(args[0]));
-		//ConsoleContext context(cout, w);		
-		w.init(wcfg);
+		World world;
+		CharRender context(cout);		
+		world.init(wcfg);
 
-		w.start();	
-		w.stop();
+		Updater upd(world, context);
+		upd.setStepSize(wcfg.step_size);
+		upd.run();
 	}
 	catch (Error& e) {
 		cout << e.what() << endl;

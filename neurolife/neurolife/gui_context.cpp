@@ -10,20 +10,14 @@ using namespace std;
 string GUIContext::current_dir;
 
 
-GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height, const string& fontPath):
-	DrawContext(view_w),
+GUIContext::GUIContext(size_t width, size_t height, const string& fontPath):
 	width(width),
 	height(height)
 {
-	GUIContext::current_dir = fontPath;
-	init_SDL();
-
-	/*if (TTF_Init() == -1) {
-		printf("TTF_Init: %s\n", TTF_GetError());
-		exit(2);
+	//Init SDL-------------------------------------------------------//
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 	}
-	string font_paht = current_dir + "arial.ttf";
-	font = TTF_OpenFont(font_paht.c_str(), 80);
 
 	window = SDL_CreateWindow("Neurolife",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -33,10 +27,22 @@ GUIContext::GUIContext(ViewWorld & view_w, size_t width, size_t height, const st
 		0
 	);
 
-	render = SDL_CreateRenderer(window, -1, 0);*/
+	render = SDL_CreateRenderer(window, -1, 0);
 
 	xs.target = width;
 	ys.target = height;
+	//----------------------------------------------------------------//
+
+	//Init Text ------------------------------------------------------//
+	/*GUIContext::current_dir = fontPath;
+
+	if (TTF_Init() == -1) {
+		printf("TTF_Init: %s\n", TTF_GetError());
+		exit(2);
+	}
+	string font_paht = current_dir + "arial.ttf";
+	font = TTF_OpenFont(font_paht.c_str(), 80);*/
+	//----------------------------------------------------------------//
 }
 
 GUIContext::~GUIContext() {
@@ -45,51 +51,43 @@ GUIContext::~GUIContext() {
 	//TTF_CloseFont(font);
 	//SDL_DestroyRenderer(render);
 	//SDL_DestroyWindow(window);
-	//SDL_Quit();
-}
-
-
-void GUIContext::init_SDL()
-{
-	/*if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-	}*/
+	SDL_Quit();
 }
 
 void GUIContext::set_color(int r, int g, int b) {
 	c = { r, g, b };
-	//SDL_SetRenderDrawColor(render, r, g, b, 255);
+	SDL_SetRenderDrawColor(render, r, g, b, 255);
 }
 
 void GUIContext::draw_arrow(const Point & p1, const Point & p2) {
-	//SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
+	SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
 }
 
 void GUIContext::draw_rect(const Point & lft_tp, int w, int h, bool filled) {
-	//SDL_Rect r{ lft_tp.x, lft_tp.y, w, h };
-	//if (!filled) {
-	//	//SDL_RenderDrawRect(render, &r);
-	//}
-	//else {
-	//	//SDL_RenderFillRect(render, &r);
-	//}
+	SDL_Rect r{ lft_tp.x, lft_tp.y, w, h };
+	if (!filled) {
+		SDL_RenderDrawRect(render, &r);
+	}
+	else {
+		SDL_RenderFillRect(render, &r);
+	}
 }
 
 void GUIContext::draw_rect(const Point& tl, const Point& dr) {
-	/*SDL_RenderDrawLine(render, tl.x, tl.y, dr.x, tl.y);
+	SDL_RenderDrawLine(render, tl.x, tl.y, dr.x, tl.y);
 	SDL_RenderDrawLine(render, dr.x, tl.y, dr.x, dr.y);
 	SDL_RenderDrawLine(render, dr.x, dr.y, tl.x, dr.y);
-	SDL_RenderDrawLine(render, tl.x, dr.y, tl.x, tl.y);*/
+	SDL_RenderDrawLine(render, tl.x, dr.y, tl.x, tl.y);
 }
 
 void GUIContext::draw_square(const Point & center, int size, bool filled) {
-	//SDL_Rect r{ center.x - size, center.y - size, size * 2, size * 2 };
-	//if (!filled) {
-	//	//SDL_RenderDrawRect(render, &r);
-	//}
-	//else {
-	//	//SDL_RenderFillRect(render, &r);
-	//}
+	SDL_Rect r{ center.x - size, center.y - size, size * 2, size * 2 };
+	if (!filled) {
+		SDL_RenderDrawRect(render, &r);
+	}
+	else {
+		SDL_RenderFillRect(render, &r);
+	}
 }
 
 

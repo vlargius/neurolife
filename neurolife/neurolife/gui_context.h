@@ -3,9 +3,9 @@
 #include <string>
 
 //#include <SDL_ttf.h>
-//#include <SDL.h>
-//#undef main
-//#include <SDL_main.h>
+#include <SDL.h>
+#undef main
+#include <SDL_main.h>
 
 #include "draw_context.h"
 
@@ -30,7 +30,7 @@ struct Point {
 	int y;
 };
 
-class GUIContext : public DrawContext {
+class GUIContext {
 public:
 	struct Color {
 		int r;
@@ -38,15 +38,13 @@ public:
 		int b;
 	};
 
-	GUIContext(ViewWorld & view_w, size_t width, size_t height, const string& font_path);
+	GUIContext(size_t width, size_t height, const string& font_path);
 	~GUIContext();
 
-	void draw() override {}
+	void draw() {}
 
-	static void init_SDL();
-
-	//SDL_Window *window;
-	//SDL_Renderer *render;
+	SDL_Window *window;
+	SDL_Renderer *render;
 
 	int get_width() { return width; }
 	int get_height() { return height; }

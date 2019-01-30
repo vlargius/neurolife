@@ -3,31 +3,27 @@
 
 using namespace std;
 
-class ViewWorld;
+#include "world.h";
 
 class DrawContext {
 public:
 	virtual void draw() = 0;
-	DrawContext(ViewWorld & view_w):
-		view_w(view_w) {}
+	DrawContext(){}
 
 	virtual void dipose() {}
 
 protected:
-	ViewWorld& view_w;
 };
 
-class ConsoleContext : public DrawContext {
+class CharRender {
 public:
-	ConsoleContext(ViewWorld & view_w, ostream& os) :
-		DrawContext(view_w),
-		os(os) {}
+	CharRender(ostream& os);
 
-	void draw() override;
+	void flash(const World& w);
 
 private:
 	ostream & os;
 
-	void draw_head() const;
-	void draw_field() const;
+	void drawHead(const World& w) const;
+	void drawField(const World& w) const;
 };

@@ -4,7 +4,7 @@ using std::cout;
 
 #include "my_utils.h"
 
-namespace my {
+namespace utils {
 	void sleep(int sleepMs)
 	{
 		#ifdef LINUX

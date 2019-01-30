@@ -9,13 +9,9 @@
 #include <list>
 #include <unordered_map>
 
-#include "draw_context.h"
 #include "field.h"
 #include "actor.h"
 #include "grass.h"
-#include "view_model.h"
-#include "gui_context.h"
-#include "view_world.h"
 
 using namespace std;
 
@@ -39,31 +35,26 @@ public:
 	World();
 
 	void init(const WorldConfig& world_cfg);
+    
+	bool isAlive();
 
 	void start();
 	void stop();
 	void start_mt();
-	void pause();
-	void resume();
 
 	void tick(double dt);
-	void draw();
 
-	string get_state() const;
-	size_t get_curr_step() const { return curr_step; }
+	size_t getCurrStep() const { return curr_step; }
+	bool active() const { return true; }
 
-	const Field * get_field() const { return field.get(); }
-	const list<Actor> & get_actors() const { return actors; }
-	const list<Grass> & get_meal() const { return meal; }
+	const Field * getField() const { return field.get(); }
+	const list<Actor> & getActors() const { return actors; }
+	const list<Grass> & getMeal() const { return meal; }
 
 	bool is_meal(size_t x, size_t y) const;
 	bool is_actor(size_t x, size_t y) const;
 
-	ViewWorld& get_view() { return my_view; }
-
 private:
-	ViewWorld my_view;
-
 	std::shared_ptr<Field> field;
 	list<Actor> actors;
 	list<Grass> meal;
@@ -74,7 +65,6 @@ private:
 
 	std::mutex com_lock;
 
-	bool is_active;
 	std::condition_variable cond;
 	//SDL_Event e;
 
