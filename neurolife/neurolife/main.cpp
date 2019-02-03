@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#include "char_render.h"
 #include "updater.h"
 #include "world.h"
 //#include "my_utils.h"
@@ -38,11 +39,11 @@ int main(int argc, char* argv[]) {
 		WorldConfig wcfg;
 		config_file >> wcfg; 
 
-		World world;
-		CharRender context(cout);		
+		World world;		
 		world.init(wcfg);
+		CharRender render(&world, cout);
 
-		Updater upd(world, context);
+		Updater upd(world, &render);
 		upd.setStepSize(wcfg.step_size);
 		upd.run();
 	}

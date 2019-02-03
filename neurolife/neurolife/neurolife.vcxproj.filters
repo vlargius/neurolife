@@ -12,39 +12,33 @@
     <Filter Include="view">
       <UniqueIdentifier>{c4235bbd-81e7-4fe6-8b89-47645c8acf9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="network">
-      <UniqueIdentifier>{099d0503-a81a-4bc5-ac34-059975211a99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="config">
       <UniqueIdentifier>{503a390f-58dd-4a74-9090-220b06e06b68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{39a8d100-92f6-4f2a-8356-66503ab16e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nnet">
+      <UniqueIdentifier>{099d0503-a81a-4bc5-ac34-059975211a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{4e00569c-a901-419f-bf0b-ff147c345763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{36c94ad8-2410-4d88-9355-7a4b411c4915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brain">
+      <UniqueIdentifier>{a5c42688-8e14-4a52-a095-562dd00cbcf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view\view_cmd">
+      <UniqueIdentifier>{47609a22-3128-432b-b542-c7d2cdf8e198}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="world.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="field.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="actor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="my_utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="creature.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="grass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="console_context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gui_context.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="view_model.cpp">
@@ -53,76 +47,94 @@
     <ClCompile Include="view_world.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="buckets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="network.cpp">
-      <Filter>network</Filter>
+      <Filter>nnet</Filter>
     </ClCompile>
     <ClCompile Include="updater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gui_context.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="char_render.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="world.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="buckets.cpp">
+      <Filter>brain</Filter>
+    </ClCompile>
+    <ClCompile Include="controller.cpp">
+      <Filter>brain</Filter>
+    </ClCompile>
+    <ClCompile Include="actor.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="view_model_cmd.cpp">
+      <Filter>view\view_cmd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="world.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="field.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="actor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="my_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="creature.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="grass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="service_symbols.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui_context.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="draw_context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="view_model.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="vec2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="view_world.h">
       <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="controller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="buckets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="actor_constant.h">
-      <Filter>config</Filter>
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>config</Filter>
     </ClInclude>
     <ClInclude Include="network.h">
-      <Filter>network</Filter>
+      <Filter>nnet</Filter>
     </ClInclude>
     <ClInclude Include="updater.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui_context.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="vec2d.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="buckets.h">
+      <Filter>brain</Filter>
+    </ClInclude>
+    <ClInclude Include="field.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="world.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="actor.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="controller.h">
+      <Filter>brain</Filter>
+    </ClInclude>
+    <ClInclude Include="view_model_cmd.h">
+      <Filter>view\view_cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="char_render.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

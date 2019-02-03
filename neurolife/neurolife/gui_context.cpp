@@ -1,14 +1,10 @@
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 #include "gui_context.h"
-#include "world.h"
-//#include <SDL.h>
-
-using namespace std;
 
 string GUIContext::current_dir;
-
 
 GUIContext::GUIContext(size_t width, size_t height, const string& fontPath):
 	width(width),

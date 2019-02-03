@@ -18,8 +18,6 @@ namespace utils {
 
 	void clear();
 
-
-
 	// helper class
 	class color {
 	public:

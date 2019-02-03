@@ -8,32 +8,24 @@
 using namespace std;
 
 struct FieldConf {
-	size_t x;
-	size_t y;
+	double x;
+	double y;
 };
-
-class Actor;
-class Grass;
 
 class Field
 {
 public:
-	list<Actor> * actors;
-	list<Grass> * meal;
 
 	Field();
 	Field(const FieldConf& fcfg);
-	bool is_valid(const vec2d& vec) const;
+	bool validate(const vec2d& vec) const;
 
-	size_t get_width() const { return width; }
-	size_t get_height() const { return height; }
+	double getWidth() const { return width; }
+	double getHeight() const { return height; }
 
-	size_t get_rand_x() const;
-	size_t get_rand_y() const;
-
-	const list<Grass> get_meal() const;
+	const vec2d getRandomPos() const;
 
 private:
-	size_t width;
-	size_t height;	
+	double width;
+	double height;
 };

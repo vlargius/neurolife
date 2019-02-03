@@ -90,30 +90,28 @@
     <ClCompile Include="actor.cpp" />
     <ClCompile Include="buckets.cpp" />
     <ClCompile Include="controller.cpp" />
-    <ClCompile Include="creature.cpp" />
-    <ClCompile Include="console_context.cpp" />
+    <ClCompile Include="char_render.cpp" />
     <ClCompile Include="field.cpp" />
-    <ClCompile Include="grass.cpp" />
     <ClCompile Include="gui_context.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="my_utils.cpp" />
     <ClCompile Include="network.cpp" />
     <ClCompile Include="updater.cpp" />
     <ClCompile Include="view_model.cpp" />
+    <ClCompile Include="view_model_cmd.cpp" />
     <ClCompile Include="view_world.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h" />
-    <ClInclude Include="actor_constant.h" />
     <ClInclude Include="buckets.h" />
+    <ClInclude Include="char_render.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="creature.h" />
-    <ClInclude Include="draw_context.h" />
+    <ClInclude Include="render.h" />
     <ClInclude Include="exceptions.h" />
     <ClInclude Include="field.h" />
-    <ClInclude Include="grass.h" />
     <ClInclude Include="gui_context.h" />
     <ClInclude Include="my_utils.h" />
     <ClInclude Include="network.h" />
@@ -121,6 +119,7 @@
     <ClInclude Include="updater.h" />
     <ClInclude Include="vec2d.h" />
     <ClInclude Include="view_model.h" />
+    <ClInclude Include="view_model_cmd.h" />
     <ClInclude Include="world.h" />
     <ClInclude Include="view_world.h" />
   </ItemGroup>

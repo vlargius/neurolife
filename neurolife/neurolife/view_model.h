@@ -1,15 +1,13 @@
 #pragma once
 
 #include "gui_context.h"
-#include "actor.h"
-#include "grass.h"
 
 class BaseViewModel
 {
 public:
 	virtual void render() {}
 
-//	static GUIContext * c;
+	static GUIContext * c;
 
 	virtual  ~BaseViewModel() {
 	}

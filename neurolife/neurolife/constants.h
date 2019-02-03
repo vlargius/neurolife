@@ -1,6 +1,6 @@
 #pragma once
 
-const int cam_speed = 15;
+const int camera_speed = 15;
 const double scroll_speed = 1.1;
 const double default_elsize = 10;
 const double default_bucket_size = 5;

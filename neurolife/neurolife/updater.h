@@ -1,12 +1,12 @@
 #pragma once
 
 
-#include "draw_context.h"
+#include "render.h"
 #include "world.h"
 
 class Updater {
 public:
-	Updater(World& w, CharRender& r);
+	Updater(World& w, Render * render);
 
 	void setStepSize(int size);
 
@@ -14,7 +14,7 @@ public:
 
 protected:
 	World& world;
-	CharRender& render;
+	Render* render;
 
 	int stepSize;
 };

@@ -2,12 +2,12 @@
 
 #include <string>
 
+using namespace std;
+
 //#include <SDL_ttf.h>
 #include <SDL.h>
 #undef main
 #include <SDL_main.h>
-
-#include "draw_context.h"
 
 class Scale {
 public:

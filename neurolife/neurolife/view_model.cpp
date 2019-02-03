@@ -68,21 +68,21 @@ void ViewModel<Actor>::render() {
 	//}
 }
 
-template<>
-void ViewModel<Grass>::render()
-{	
-	//const Field * f = model.get_field();
-	//int x = c->xs(model.x());
-	//int y = c->ys(model.y());
-
-	//if (!model.is_in_bucket) {
-	//	c->set_color(0, 255, 0);
-	//}
-	//else {
-	//	c->set_color(0, 255, 200);
-	//}
-	//c->draw_circle({ x, y }, elsize() * 0.7, true);
-}
+//template<>
+//void ViewModel<Grass>::render()
+//{	
+//	//const Field * f = model.get_field();
+//	//int x = c->xs(model.x());
+//	//int y = c->ys(model.y());
+//
+//	//if (!model.is_in_bucket) {
+//	//	c->set_color(0, 255, 0);
+//	//}
+//	//else {
+//	//	c->set_color(0, 255, 200);
+//	//}
+//	//c->draw_circle({ x, y }, elsize() * 0.7, true);
+//}
 #undef max
 
 int BaseViewModel::elsize() const

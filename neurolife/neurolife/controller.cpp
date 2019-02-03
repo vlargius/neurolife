@@ -42,11 +42,11 @@ void Controller::calc_input()
 {
 	buckets.fill();
 
-	for (int i = 0; i < buckets.param.width; ++i) {
-		for (int j = 0; j < buckets.param.height; ++j) {
-			input.at(i, j) += buckets.grid[make_pair(i, j)].size() * meal_weight;
-		}
-	}
+	//for (int i = 0; i < buckets.param.width; ++i) {
+	//	for (int j = 0; j < buckets.param.height; ++j) {
+	//		input.at(i, j) += buckets.grid[make_pair(i, j)].size() * meal_weight;
+	//	}
+	//}
 
 }
 

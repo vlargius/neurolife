@@ -1,31 +1,20 @@
 #pragma once
 
-#include "field.h"
 #include "vec2d.h"
 
-class Creature
-{
+class Creature {
 public:
-	Creature(Field * filed);
-	Creature(Field * filed, double x, double y);
-	virtual ~Creature() {}
+	using Id_type = int;
+	virtual ~Creature() {};
 
-	void kill() { is_alive = false; }
-	virtual bool is_ok() {return is_alive; }
+	const vec2d getPos() const { return position; }
+	void setPos(const vec2d& pos) { position = pos; }
 
-	double x() const { return coor.x; }
-	double y() const { return coor.y; }
-
-	const Field* get_field() const { return field; }
-
-	mutable bool is_in_bucket = false;
+	Id_type getId() const { return id; }
 
 protected:
+	Creature() {}
 
-	vec2d coor;
-
-	bool is_alive;
-
-	Field * field;
+	vec2d position;
+	Id_type id;
 };
-

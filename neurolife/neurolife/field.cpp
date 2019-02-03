@@ -1,7 +1,6 @@
 #include <string>
 
 #include "field.h"
-#include "grass.h"
 #include "constants.h"
 
 Field::Field() :
@@ -17,22 +16,14 @@ Field::Field(const FieldConf & fcfg) :
 
 
 
-bool Field::is_valid(const vec2d& vec) const
-{
+bool Field::validate(const vec2d& vec) const {
 	return vec.x >= 0 && vec.x < width && vec.y >= 0 && vec.y < height;
 }
 
-size_t Field::get_rand_x() const
-{
-	return size_t(rand() % width);
+double rndClamp(double to) {
+	return static_cast<double>(rand() % static_cast<int>(to));
 }
 
-size_t Field::get_rand_y() const
-{
-	return size_t(rand() % height);
-}
-
-const list<Grass> Field::get_meal() const
-{
-	return *meal;
+const vec2d Field::getRandomPos() const {
+	return { rndClamp(width), rndClamp(height)};
 }

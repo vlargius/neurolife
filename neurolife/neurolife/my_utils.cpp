@@ -5,6 +5,8 @@ using std::cout;
 #include "my_utils.h"
 
 namespace utils {
+
+	//crossplatform thread seep function
 	void sleep(int sleepMs)
 	{
 		#ifdef LINUX

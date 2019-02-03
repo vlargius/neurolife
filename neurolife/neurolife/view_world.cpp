@@ -15,19 +15,19 @@ void ViewWorld::render() {
 
 		c->present();	*/	
 }
-
-void ViewWorld::add(const Grass & g) {
-	//model2vew[&g] = new ViewModel<Grass>(g);
-}
-
-void ViewWorld::add(const Actor & a) {
-	//model2vew[&a] = new ViewModel<Actor>(a);
-}
-
-void ViewWorld::remove(const Creature & c) {
-	//auto it = model2vew.find(&c);
-	//it->second->~BaseViewModel();	
-}
+//
+//void ViewWorld::add(const Grass & g) {
+//	//model2vew[&g] = new ViewModel<Grass>(g);
+//}
+//
+//void ViewWorld::add(const Actor & a) {
+//	//model2vew[&a] = new ViewModel<Actor>(a);
+//}
+//
+//void ViewWorld::remove(const Creature & c) {
+//	//auto it = model2vew.find(&c);
+//	//it->second->~BaseViewModel();	
+//}
 
 
 void ViewWorld::draw_statistics() {
