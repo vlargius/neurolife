@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="view">
-      <UniqueIdentifier>{c4235bbd-81e7-4fe6-8b89-47645c8acf9d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="config">
       <UniqueIdentifier>{503a390f-58dd-4a74-9090-220b06e06b68}</UniqueIdentifier>
     </Filter>
@@ -30,8 +27,11 @@
     <Filter Include="brain">
       <UniqueIdentifier>{a5c42688-8e14-4a52-a095-562dd00cbcf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="view\view_cmd">
-      <UniqueIdentifier>{47609a22-3128-432b-b542-c7d2cdf8e198}</UniqueIdentifier>
+    <Filter Include="objects\components">
+      <UniqueIdentifier>{6d9e3fc7-ad9f-436b-a7a7-0b9f2bd9f17a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\gui">
+      <UniqueIdentifier>{c3fa9b85-a72b-4b6b-b67b-7390e1d5ea1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,20 +41,11 @@
     <ClCompile Include="my_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="view_model.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="view_world.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
     <ClCompile Include="network.cpp">
       <Filter>nnet</Filter>
     </ClCompile>
     <ClCompile Include="updater.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gui_context.cpp">
-      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="char_render.cpp">
       <Filter>render</Filter>
@@ -74,25 +65,19 @@
     <ClCompile Include="actor.cpp">
       <Filter>objects</Filter>
     </ClCompile>
-    <ClCompile Include="view_model_cmd.cpp">
-      <Filter>view\view_cmd</Filter>
+    <ClCompile Include="gui_context.cpp">
+      <Filter>render\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui_render.cpp">
+      <Filter>render\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="my_utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="service_symbols.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="view_model.h">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="view_world.h">
-      <Filter>view</Filter>
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>config</Filter>
@@ -102,9 +87,6 @@
     </ClInclude>
     <ClInclude Include="updater.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui_context.h">
-      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="vec2d.h">
       <Filter>math</Filter>
@@ -118,23 +100,35 @@
     <ClInclude Include="world.h">
       <Filter>objects</Filter>
     </ClInclude>
-    <ClInclude Include="creature.h">
-      <Filter>objects</Filter>
-    </ClInclude>
     <ClInclude Include="actor.h">
       <Filter>objects</Filter>
     </ClInclude>
     <ClInclude Include="controller.h">
       <Filter>brain</Filter>
     </ClInclude>
-    <ClInclude Include="view_model_cmd.h">
-      <Filter>view\view_cmd</Filter>
-    </ClInclude>
     <ClInclude Include="char_render.h">
       <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render.h">
       <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="comp_pos.h">
+      <Filter>objects\components</Filter>
+    </ClInclude>
+    <ClInclude Include="comp_move.h">
+      <Filter>objects\components</Filter>
+    </ClInclude>
+    <ClInclude Include="gui_context.h">
+      <Filter>render\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui_render.h">
+      <Filter>render\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="mutil.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="my_utils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

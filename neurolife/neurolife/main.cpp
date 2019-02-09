@@ -3,13 +3,13 @@
 #include <fstream>
 #include <ctime>
 
+
 using namespace std;
 
 #include "char_render.h"
+#include "gui_render.h"
 #include "updater.h"
 #include "world.h"
-//#include "my_utils.h"
-//#include "gui_context.h"
 
 #include "exceptions.h"
 
@@ -21,7 +21,7 @@ void wait_key_press() {
 }
 
 int main(int argc, char* argv[]) {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	string config_name = "default.cfg";
 
 	vector<string> args(argv, argv + argc);
@@ -34,14 +34,20 @@ int main(int argc, char* argv[]) {
 		if (!config_file) {
 			throw Error("can't find configuration file");
 			return 0;
-		}
+		}		
+
+		string ip;
+
+		config_file >> ip;
 
 		WorldConfig wcfg;
 		config_file >> wcfg; 
 
 		World world;		
 		world.init(wcfg);
-		CharRender render(&world, cout);
+		/*CharRender render(&world, cout);*/
+
+		GUIRender render(&world, 800, 600);
 
 		Updater upd(world, &render);
 		upd.setStepSize(wcfg.step_size);

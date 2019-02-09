@@ -13,7 +13,7 @@ class Scale {
 public:
 
 	int operator()(double x) {
-		return  (x-source/2) /source * target *scale + target/2 + pos;
+		return ((x-source/2) /source * target *scale + target/2 + pos);
 	}
 
 	double scale = 1;
@@ -38,7 +38,7 @@ public:
 		int b;
 	};
 
-	GUIContext(size_t width, size_t height, const string& font_path);
+	GUIContext(int width, int height, const string& font_path);
 	~GUIContext();
 
 	void draw() {}
@@ -50,6 +50,7 @@ public:
 	int get_height() { return height; }
 
 	void set_color(int r, int g, int b);
+	void setColor(const Color& color);
 	Color color() const { return c; }
 
 	void draw_arrow(const Point& p1, const Point& p2);
@@ -75,6 +76,9 @@ public:
 
 	static string current_dir;
 
+	GUIContext(const GUIContext&) = delete;
+	GUIContext& operator=(const GUIContext&) = delete;
+
 private:
 	int width = 640;
 	int height = 480;
@@ -82,6 +86,7 @@ private:
 	double current_scale = 1;
 
 	Color c;
+	Color clearC = { 0, 0, 0 };
 	//TTF_Font * font;
 
 	void point(int x, int y);

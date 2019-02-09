@@ -9,6 +9,10 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="server|x64">
+      <Configuration>server</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -18,6 +22,12 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='server|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -38,6 +48,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='server|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -54,11 +67,29 @@
     <IncludePath>D:\dev\lib\SDL2-2.0.9\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\dev\lib\SDL2-2.0.9\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='server|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\</IntDir>
+    <IncludePath>D:\dev\lib\SDL2-2.0.9\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\dev\lib\SDL2-2.0.9\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>D:\dev\lib\SDL2-2.0.9;$(IncludePath)</IncludePath>
     <LibraryPath>D:\dev\lib\SDL2-2.0.9\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;OpenGL32.Lib;GlU32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='server|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -89,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="actor.cpp" />
     <ClCompile Include="buckets.cpp" />
+    <ClCompile Include="gui_render.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="char_render.cpp" />
     <ClCompile Include="field.cpp" />
@@ -97,31 +129,28 @@
     <ClCompile Include="my_utils.cpp" />
     <ClCompile Include="network.cpp" />
     <ClCompile Include="updater.cpp" />
-    <ClCompile Include="view_model.cpp" />
-    <ClCompile Include="view_model_cmd.cpp" />
-    <ClCompile Include="view_world.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h" />
     <ClInclude Include="buckets.h" />
     <ClInclude Include="char_render.h" />
+    <ClInclude Include="gui_render.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="controller.h" />
-    <ClInclude Include="creature.h" />
+    <ClInclude Include="comp_pos.h" />
+    <ClInclude Include="comp_move.h" />
+    <ClInclude Include="mutil.h" />
+    <ClInclude Include="my_utils.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="exceptions.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="gui_context.h" />
-    <ClInclude Include="my_utils.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="service_symbols.h" />
     <ClInclude Include="updater.h" />
     <ClInclude Include="vec2d.h" />
-    <ClInclude Include="view_model.h" />
-    <ClInclude Include="view_model_cmd.h" />
     <ClInclude Include="world.h" />
-    <ClInclude Include="view_world.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\bin\default.cfg" />

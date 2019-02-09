@@ -19,7 +19,7 @@ struct WorldConfig {
 	unsigned	actor_count;
 	unsigned	grass_count;
 	size_t		ttl;
-	size_t		step_size;
+	int		step_size;
 };
 
 istream& operator>>(istream& is, WorldConfig & w_cgf);

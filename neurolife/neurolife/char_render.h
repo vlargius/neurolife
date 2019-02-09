@@ -5,7 +5,7 @@
 class CharRender : public Render {
 public:
 	CharRender(const World* w, ostream& os);
-	void flash();
+	void flash() override;
 
 private:
 	ostream & os;

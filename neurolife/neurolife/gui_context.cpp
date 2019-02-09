@@ -6,7 +6,7 @@
 
 string GUIContext::current_dir;
 
-GUIContext::GUIContext(size_t width, size_t height, const string& fontPath):
+GUIContext::GUIContext(int width, int height, const string& fontPath):
 	width(width),
 	height(height)
 {
@@ -53,6 +53,11 @@ GUIContext::~GUIContext() {
 void GUIContext::set_color(int r, int g, int b) {
 	c = { r, g, b };
 	SDL_SetRenderDrawColor(render, r, g, b, 255);
+}
+
+void GUIContext::setColor(const Color& color) {
+	c = color;
+	SDL_SetRenderDrawColor(render, c.r, c.g, c.b, 255);
 }
 
 void GUIContext::draw_arrow(const Point & p1, const Point & p2) {
@@ -177,14 +182,15 @@ void GUIContext::draw_text(const Point & coor, const string text)
 }
 
 void GUIContext::point(int x, int y) {
-	//SDL_RenderDrawPoint(render, x, y);
+	SDL_RenderDrawPoint(render, x, y);
 }
 
 void GUIContext::clear() {
-	//SDL_RenderClear(render);
+	setColor(clearC);
+	SDL_RenderClear(render);
 }
 
 void GUIContext::present() {
-	//SDL_RenderPresent(render);
+	SDL_RenderPresent(render);
 }
 

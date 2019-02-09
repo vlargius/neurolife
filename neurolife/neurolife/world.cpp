@@ -12,7 +12,6 @@
 
 World::World() {}
 
-
 void World::init(const WorldConfig & world_cfg) {
 	stepSize = world_cfg.step_size;
 	timeToLive = world_cfg.ttl;
@@ -21,7 +20,7 @@ void World::init(const WorldConfig & world_cfg) {
 
 	for (size_t i = 0; i < world_cfg.actor_count; ++i) {
 		Actor a;
-		a.setPos(field.getRandomPos());
+		a.getPosComp().setPos(field.getRandomPos());
 		actors.emplace_back(a);
 	}
 }
@@ -34,23 +33,9 @@ void World::tick(double dt)
 {
 	++currentStep;
 
-	/*for(auto& a: actors) {
-		a.live(dt);
-	}*/
-
-	/*for (auto& a : actors) {
-		if (!a.is_ok()) {
-			my_view.remove(a);
-		}
+	for (auto& a : actors) {
+		a.tick(dt, getField());
 	}
-
-	for (auto & m : meal) {
-		if (!m.is_ok()) {
-			my_view.remove(m);
-		}
-	}*/
-	//actors.remove_if([](Actor & a){ return !a.is_ok();});
-	//meal.remove_if([](Grass & g){ return !g.is_ok();});
 }
 
 istream& operator>>(istream& is, WorldConfig & w_cgf) {
