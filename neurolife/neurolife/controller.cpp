@@ -1,5 +1,7 @@
 #include <random>
 
+using namespace std;
+
 #include "controller.h"
 #include "constants.h"
 
@@ -25,17 +27,17 @@ vec2d Controller::get_control() {
 }
 
 void Controller::set_random_input() {
-	random_device rnd_device;
-	mt19937 mersenne_engine{ rnd_device() };
-	uniform_real<double> dist{ -1, 1 };
+	// random_device rnd_device;
+	// mt19937 mersenne_engine{ rnd_device() };
+	// uniform_real<double> dist{ -1, 1 };
 
-	auto gen = [&dist, &mersenne_engine]() {
-		return dist(mersenne_engine);
-	};
+	// auto gen = [&dist, &mersenne_engine]() {
+	// 	return dist(mersenne_engine);
+	// };
 
-	for (int i = 0; i < input.width*input.height; ++i) {
-		input.at(i) = gen();
-	}
+	// for (int i = 0; i < input.width*input.height; ++i) {
+	// 	input.at(i) = gen();
+	// }
 }
 
 void Controller::calc_input()

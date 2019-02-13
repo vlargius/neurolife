@@ -5,9 +5,15 @@
 using namespace std;
 
 //#include <SDL_ttf.h>
-#include <SDL.h>
+#ifdef CLI
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_main.h>
+#endif
+// #include <SDL.h>
+// #include <SDL_main.h>
+
+
 #undef main
-#include <SDL_main.h>
 
 class Scale {
 public:
@@ -42,9 +48,10 @@ public:
 	~GUIContext();
 
 	void draw() {}
-
+#ifdef CLI
 	SDL_Window *window;
 	SDL_Renderer *render;
+#endif
 
 	int get_width() { return width; }
 	int get_height() { return height; }

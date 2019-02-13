@@ -42,10 +42,10 @@ public:
 
 	const list<Actor> & getActors() const { return actors; }
 
-private:
+
 	Field field;
 	list<Actor> actors;
-
+private:
 	size_t timeToLive;
 	size_t currentStep;
 	size_t stepSize;

@@ -4,11 +4,12 @@
 
 #include "gui_context.h"
 
-Updater::Updater(World & w, Render* render):
+Updater::Updater(World & w, Render* render, RC type, const string& ip):
 	world(w),
 	render(render),
-	stepSize(1) {
-
+	stepSize(1),
+	type(type) {
+		client.init(ip);
 }
 
 void Updater::setStepSize(int size) {
@@ -18,31 +19,52 @@ void Updater::setStepSize(int size) {
 void Updater::run() {
 	double dt = 1;
 
-	//GUIContext context(1200, 600, "run");
-
-	/*chrono::steady_clock::time_point from, to;
-
-	for (size_t i = 0; i < time_to_live; ++i) {
-		while (!is_active) {
-			std::unique_lock<std::mutex> lock(com_lock);
-			cond.wait(lock);
-		}
-		double dt = chrono::duration_cast<chrono::milliseconds>(to - from).count();
-		from = chrono::steady_clock::now();
-		tick(dt);
-
-		handle_event();
-
-		my::sleep(step_size);
-		to = chrono::steady_clock::now();
+	switch (type)
+	{
+	case RC::NONE:
+	{
+		break;
 	}
-	cout << "closing" << endl;*/
+	case RC::CLIENT:
+	{
+		client.connect();
+		break;
+	}
+	case RC::SERVER:
+	{
+		server.run();
+		cout << "server started" << endl;
+		break;
+	}
+	default:
+		break;
+	}
+	do {
+		Actor& a = world.actors.front();
+		if (type != RC::SERVER)
+			render->flash();
+		
+		if (type != RC::CLIENT)
+			world.tick(dt);
 
-	do{
-		render->flash();
-		world.tick(dt);
+		if (type == RC::SERVER) {
+			string pos = to_string(rand()% 10) + " " + to_string(rand() % 10);//a.getPosComp().serialize();
+			server.send(pos);
+			server.receive(pos);
+			cout << "stat: " << pos << endl;
+		}
+
+		if (type == Updater::RC::CLIENT)
+		{
+			string msg;
+			client.receive(msg);
+			a.getPosComp().deserialize(msg);
+			cout << a.getPosComp().serialize() << endl;
+			client.send("ok");
+		}
+
 		utils::sleep(stepSize);
-	} while (world.alive());
+	} while (true);
 }
 
 //

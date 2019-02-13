@@ -6,6 +6,7 @@
 #include <cmath>
 #include <time.h>
 #include <functional>
+#include <random>
 
 
 using namespace std;
@@ -40,17 +41,16 @@ public:
 		h(input->height),
 		weights(w * h) {}
 
-	void get_rand() {
-		
-		random_device rnd_device;		
-		mt19937 mersenne_engine{ rnd_device() }; 
-		uniform_real<double> dist{ -1, 1 };
+	void get_rand() {		
+		// random_device rnd_device;		
+		// mt19937 mersenne_engine{ rnd_device() }; 
+		// uniform_real<double> dist(-1, 1);
 
-		auto gen = [&dist, &mersenne_engine]() {
-			return dist(mersenne_engine);
-		};
+		// auto gen = [&dist, &mersenne_engine]() {
+		// 	return dist(mersenne_engine);
+		// };
 
-		generate(begin(weights), end(weights), gen);
+		// generate(begin(weights), end(weights), gen);
 	}
 
 	double calc() const;

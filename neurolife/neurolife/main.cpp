@@ -22,11 +22,27 @@ void wait_key_press() {
 
 int main(int argc, char* argv[]) {
 	srand((unsigned int)time(NULL));
-	string config_name = "default.cfg";
+	string config_name = "world.cfg";
 
-	vector<string> args(argv, argv + argc);
-	if (args.size() == 2) {
-		config_name = args[1];
+	vector<string> args(argv + 1, argv + argc);
+	if (args.size() > 0) {
+		config_name = args[0];
+	}
+
+	string ip = "none";
+	if (args.size() > 1) {
+		ip = args[1];
+	}
+
+	Updater::RC type = Updater::RC::NONE;
+	if (ip == "none")
+	{
+		type = Updater::RC::NONE;
+	} else if (ip == "server") {
+		type = Updater::RC::SERVER;
+	} else
+	{
+		type = Updater::RC::CLIENT;
 	}
 
 	try {
@@ -36,20 +52,16 @@ int main(int argc, char* argv[]) {
 			return 0;
 		}		
 
-		string ip;
-
-		config_file >> ip;
 
 		WorldConfig wcfg;
 		config_file >> wcfg; 
 
 		World world;		
 		world.init(wcfg);
-		/*CharRender render(&world, cout);*/
+		
+		GUIRender render(&world, 800, 600);		
 
-		GUIRender render(&world, 800, 600);
-
-		Updater upd(world, &render);
+		Updater upd(world, &render, type, ip);	
 		upd.setStepSize(wcfg.step_size);
 		upd.run();
 	}

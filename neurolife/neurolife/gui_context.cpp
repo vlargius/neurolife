@@ -10,6 +10,7 @@ GUIContext::GUIContext(int width, int height, const string& fontPath):
 	width(width),
 	height(height)
 {
+#ifdef CLI
 	//Init SDL-------------------------------------------------------//
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
@@ -39,32 +40,42 @@ GUIContext::GUIContext(int width, int height, const string& fontPath):
 	string font_paht = current_dir + "arial.ttf";
 	font = TTF_OpenFont(font_paht.c_str(), 80);*/
 	//----------------------------------------------------------------//
+#endif
 }
 
 GUIContext::~GUIContext() {
+#ifdef CLI
 	//TTF_CloseFont(font);
 
 	//TTF_CloseFont(font);
 	//SDL_DestroyRenderer(render);
 	//SDL_DestroyWindow(window);
 	SDL_Quit();
+#endif
 }
 
 void GUIContext::set_color(int r, int g, int b) {
+#ifdef CLI
 	c = { r, g, b };
 	SDL_SetRenderDrawColor(render, r, g, b, 255);
+#endif
 }
 
 void GUIContext::setColor(const Color& color) {
+#ifdef CLI
 	c = color;
 	SDL_SetRenderDrawColor(render, c.r, c.g, c.b, 255);
+#endif
 }
 
 void GUIContext::draw_arrow(const Point & p1, const Point & p2) {
+#ifdef CLI
 	SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
+#endif
 }
 
 void GUIContext::draw_rect(const Point & lft_tp, int w, int h, bool filled) {
+#ifdef CLI
 	SDL_Rect r{ lft_tp.x, lft_tp.y, w, h };
 	if (!filled) {
 		SDL_RenderDrawRect(render, &r);
@@ -72,16 +83,20 @@ void GUIContext::draw_rect(const Point & lft_tp, int w, int h, bool filled) {
 	else {
 		SDL_RenderFillRect(render, &r);
 	}
+#endif
 }
 
 void GUIContext::draw_rect(const Point& tl, const Point& dr) {
+#ifdef CLI
 	SDL_RenderDrawLine(render, tl.x, tl.y, dr.x, tl.y);
 	SDL_RenderDrawLine(render, dr.x, tl.y, dr.x, dr.y);
 	SDL_RenderDrawLine(render, dr.x, dr.y, tl.x, dr.y);
 	SDL_RenderDrawLine(render, tl.x, dr.y, tl.x, tl.y);
+#endif
 }
 
 void GUIContext::draw_square(const Point & center, int size, bool filled) {
+#ifdef CLI
 	SDL_Rect r{ center.x - size, center.y - size, size * 2, size * 2 };
 	if (!filled) {
 		SDL_RenderDrawRect(render, &r);
@@ -89,6 +104,7 @@ void GUIContext::draw_square(const Point & center, int size, bool filled) {
 	else {
 		SDL_RenderFillRect(render, &r);
 	}
+#endif
 }
 
 
@@ -182,15 +198,21 @@ void GUIContext::draw_text(const Point & coor, const string text)
 }
 
 void GUIContext::point(int x, int y) {
+#ifdef CLI
 	SDL_RenderDrawPoint(render, x, y);
+#endif
 }
 
 void GUIContext::clear() {
+#ifdef CLI
 	setColor(clearC);
 	SDL_RenderClear(render);
+#endif
 }
 
 void GUIContext::present() {
+#ifdef CLI
 	SDL_RenderPresent(render);
+#endif
 }
 

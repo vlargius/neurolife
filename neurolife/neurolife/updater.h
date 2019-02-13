@@ -3,18 +3,32 @@
 
 #include "render.h"
 #include "world.h"
+#include "server.h"
+#include "client.h"
 
 class Updater {
 public:
-	Updater(World& w, Render * render);
+  enum class RC
+  {
+	  NONE,
+	  SERVER,
+	  CLIENT
+  };
 
-	void setStepSize(int size);
+  Updater(World &w, Render *render, RC type, const string& ip);
 
-	void run();
+  void setStepSize(int size);
+
+  void run();
+
+  Server server;
+  Client client;
 
 protected:
-	World& world;
-	Render* render;
+  World &world;
+  Render *render;
 
-	int stepSize;
+  RC type;
+
+  int stepSize;
 };
