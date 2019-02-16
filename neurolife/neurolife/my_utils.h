@@ -8,6 +8,7 @@
 #include <unistd.h>
 #endif
 #ifdef WINDOWS
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 

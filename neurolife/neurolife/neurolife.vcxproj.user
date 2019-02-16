@@ -4,11 +4,11 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>$(SolutionDir)bin\client.cfg</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>$(SolutionDir)\bin\world.cfg 127.0.0.1</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='server|x64'">
-    <LocalDebuggerCommandArguments>$(SolutionDir)bin\server.cfg</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>$(SolutionDir)bin\world.cfg server</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

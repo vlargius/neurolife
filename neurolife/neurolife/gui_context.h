@@ -4,13 +4,23 @@
 
 using namespace std;
 
-//#include <SDL_ttf.h>
+
 #ifdef CLI
+
+#ifdef LINUX
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_main.h>
+#endif // LINUX
+
+#ifdef WINDOWS
+#include <SDL.h>
+#include <SDL_main.h>
+#endif // WINDOWS
+
+
+
 #endif
-// #include <SDL.h>
-// #include <SDL_main.h>
+
 
 
 #undef main

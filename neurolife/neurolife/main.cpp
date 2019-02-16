@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	srand((unsigned int)time(NULL));
 	string config_name = "world.cfg";
 
-	vector<string> args(argv + 1, argv + argc);
+ 	vector<string> args(argv + 1, argv + argc);
 	if (args.size() > 0) {
 		config_name = args[0];
 	}

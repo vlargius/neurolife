@@ -9,3 +9,4 @@
 *.pdb
 *.iobj
 *.ipdb
+/neurolife/build
