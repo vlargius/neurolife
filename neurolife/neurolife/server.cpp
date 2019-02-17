@@ -1,5 +1,7 @@
 #include "server.h"
 
+#include <thread>
+
 #ifdef LINUX
 
 #include <unistd.h> 
@@ -72,8 +74,11 @@ void Server::accept() {
 Server::Server() {}
 
 Server::~Server() {
-	closesocket(client);
-	cout << "Client disconnected." << endl;
+	if (acceptThread.joinable())
+		acceptThread.join();
+
+	for (auto c : clients)
+		closesocket(c);
 }
 
 void Server::run() {
@@ -89,18 +94,32 @@ void Server::run() {
 
 	bind(server, (SOCKADDR *)&serverAddr, sizeof(serverAddr));
 
-	accept();
+	acceptThread = thread(&Server::accept, this);
 }
 
-void Server::receive(string& msg) {
+void Server::receive(string& msg, SOCKET client) {
 	int valread;
 	char buffer[1024] = { 0 };
 	valread = ::recv(client, buffer, 1024, 0);
 	msg = buffer;
 }
 
-void Server::send(const string& msg) {
+void Server::send(const string& msg, SOCKET client) {
 	::send(client, &msg[0], msg.size(), 0);
+}
+
+void Server::broadcast(const string& msg) {
+	for (auto c : clients) {
+		send(msg, c);
+	}
+}
+
+void Server::sync() {
+	for (auto c : clients) {
+		string msg;
+		receive(msg, c);
+		cout << c << ": " << msg << endl;
+	}
 }
 
 void Server::accept() {
@@ -108,8 +127,13 @@ void Server::accept() {
 
 	cout << "Listening for incoming connections..." << endl;
 
-	int clientAddrSize = sizeof(clientAddr);
-	client = ::accept(server, (SOCKADDR *)&clientAddr, &clientAddrSize);
+	for (;;)
+	{
+		SOCKADDR_IN clientAddr;
+		int clientAddrSize = sizeof(clientAddr);
+		SOCKET client = ::accept(server, nullptr, nullptr);// (SOCKADDR *)&clientAddr, &clientAddrSize);
+		clients.push_back(client);
+	}
 }
 
 #endif //WINDOWS

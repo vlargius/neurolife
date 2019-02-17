@@ -33,7 +33,6 @@ void Updater::run() {
 	case RC::SERVER:
 	{
 		server.run();
-		cout << "server started" << endl;
 		break;
 	}
 	default:
@@ -49,9 +48,8 @@ void Updater::run() {
 
 		if (type == RC::SERVER) {
 			string pos = to_string(rand()% 10) + " " + to_string(rand() % 10);//a.getPosComp().serialize();
-			server.send(pos);
-			server.receive(pos);
-			cout << "stat: " << pos << endl;
+			server.broadcast(pos);
+			server.sync();
 		}
 
 		if (type == Updater::RC::CLIENT)

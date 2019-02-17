@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <vector>
+#include <thread>
 
 using namespace std;
 
@@ -11,6 +13,10 @@ using namespace std;
 #ifdef WINDOWS
 #include <winsock2.h>
 #endif
+#ifdef LINUX
+using SOCKET = int;
+#endif // LINUX
+
 
 class Server {
 public:
@@ -20,17 +26,19 @@ public:
 	
 	void run();
 
-	void receive(string& msg);
-	void send(const string& msg);
+	void receive(string& msg, SOCKET client);
+	void send(const string& msg, SOCKET client);
+
+	void broadcast(const string& msg);
+	void sync();
 
 protected:
-
-    int server_fd;
-    int new_socket;
     int opt = 1;
 
-	SOCKET server, client;
-	SOCKADDR_IN clientAddr;
+	SOCKET server;
+	vector<SOCKET> clients;
+
+	thread acceptThread;
 
 	void accept();
 };
