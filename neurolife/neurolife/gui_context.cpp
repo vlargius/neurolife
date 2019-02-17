@@ -10,7 +10,20 @@ GUIContext::GUIContext(int width, int height, const string& fontPath):
 	width(width),
 	height(height)
 {
+}
+
+GUIContext::~GUIContext() {
 #ifdef CLI
+	//TTF_CloseFont(font);
+
+	//TTF_CloseFont(font);
+	//SDL_DestroyRenderer(render);
+	//SDL_DestroyWindow(window);
+	SDL_Quit();
+#endif
+}
+
+void GUIContext::init() {
 	//Init SDL-------------------------------------------------------//
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
@@ -29,29 +42,6 @@ GUIContext::GUIContext(int width, int height, const string& fontPath):
 	xs.target = width;
 	ys.target = height;
 	//----------------------------------------------------------------//
-
-	//Init Text ------------------------------------------------------//
-	/*GUIContext::current_dir = fontPath;
-
-	if (TTF_Init() == -1) {
-		printf("TTF_Init: %s\n", TTF_GetError());
-		exit(2);
-	}
-	string font_paht = current_dir + "arial.ttf";
-	font = TTF_OpenFont(font_paht.c_str(), 80);*/
-	//----------------------------------------------------------------//
-#endif
-}
-
-GUIContext::~GUIContext() {
-#ifdef CLI
-	//TTF_CloseFont(font);
-
-	//TTF_CloseFont(font);
-	//SDL_DestroyRenderer(render);
-	//SDL_DestroyWindow(window);
-	SDL_Quit();
-#endif
 }
 
 void GUIContext::set_color(int r, int g, int b) {

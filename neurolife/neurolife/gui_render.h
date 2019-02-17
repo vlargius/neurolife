@@ -7,6 +7,7 @@ class GUIRender : public Render {
 public:
 	GUIRender(const World* w, int with, int height);
 
+	void run() override;
 	void flash() override;
 
 protected:

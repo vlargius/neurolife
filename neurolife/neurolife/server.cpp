@@ -74,8 +74,7 @@ void Server::accept() {
 Server::Server() {}
 
 Server::~Server() {
-	if (acceptThread.joinable())
-		acceptThread.join();
+	acceptThread.join();
 
 	for (auto c : clients)
 		closesocket(c);
@@ -92,7 +91,7 @@ void Server::run() {
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(PORT);
 
-	bind(server, (SOCKADDR *)&serverAddr, sizeof(serverAddr));
+	::bind(server, (SOCKADDR *)&serverAddr, sizeof(serverAddr));
 
 	acceptThread = thread(&Server::accept, this);
 }

@@ -18,6 +18,7 @@ void Updater::setStepSize(int size) {
 
 void Updater::run() {
 	double dt = 1;
+	isActive = true;
 
 	switch (type)
 	{
@@ -27,7 +28,9 @@ void Updater::run() {
 	}
 	case RC::CLIENT:
 	{
-		client.connect();
+		while (!client.connect())
+			utils::sleep(300);
+		render->run();
 		break;
 	}
 	case RC::SERVER:
@@ -38,6 +41,8 @@ void Updater::run() {
 	default:
 		break;
 	}
+	SDL_Event e;
+
 	do {
 		Actor& a = world.actors.front();
 		if (type != RC::SERVER)
@@ -54,6 +59,13 @@ void Updater::run() {
 
 		if (type == Updater::RC::CLIENT)
 		{
+			while (SDL_PollEvent(&e)) {
+				//If user closes the window
+				if (e.type == SDL_QUIT) {
+					isActive = false;
+				}
+			}
+			handleEvent();
 			string msg;
 			client.receive(msg);
 			a.getPosComp().deserialize(msg);
@@ -62,54 +74,16 @@ void Updater::run() {
 		}
 
 		utils::sleep(stepSize);
-	} while (true);
+	} while (true && isActive);
 }
 
-//
-//void World::handle_event() {
-//	//while (SDL_PollEvent(&e)) {
-//	//	//If user closes the window
-//	//	if (e.type == SDL_QUIT) {
-//	//		is_active = false;
-//	//	}
-//	//	//If user presses any key
-//	//	if (e.type == SDL_KEYDOWN) {
-//	//		switch (e.key.keysym.sym) {
-//	//		case SDLK_LEFT:
-//	//			context->xs.pos += cam_speed;
-//	//			cout << "l";
-//	//			break;
-//	//		case SDLK_RIGHT:
-//	//			context->xs.pos -= cam_speed;
-//	//			cout << "r";
-//	//			break;
-//	//		case SDLK_UP:
-//	//			context->ys.pos += cam_speed;
-//	//			cout << "u";
-//	//			break;
-//	//		case SDLK_DOWN:
-//	//			context->ys.pos -= cam_speed;
-//	//			cout << "d";
-//	//			break;
-//	//		case SDLK_ESCAPE:
-//	//			is_active = false;
-//	//		default:
-//	//			break;
-//	//		}
-//	//	}
-//	//	if (e.type == SDL_MOUSEWHEEL)
-//	//	{
-//	//		if (e.wheel.y > 0)
-//	//		{
-//	//			context->scale() *= scroll_speed;
-//	//		}
-//	//		else if (e.wheel.y < 0)
-//	//		{
-//	//			context->scale() /= scroll_speed;
-//	//		}
-//	//	}
-//	//	
-//
-//	//	
-//	//}
-//}
+
+void Updater::handleEvent() {
+#ifdef CLI1
+	while (SDL_PollEvent(&e)) {
+		if (e.type == SDL_QUIT) {
+			isActive = false;
+		}
+	}
+#endif
+}

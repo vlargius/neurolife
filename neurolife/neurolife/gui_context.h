@@ -29,7 +29,7 @@ class Scale {
 public:
 
 	int operator()(double x) {
-		return ((x-source/2) /source * target *scale + target/2 + pos);
+		return static_cast<int>((x-source/2.) /source * target *scale + target/2. + pos);
 	}
 
 	double scale = 1;
@@ -56,6 +56,8 @@ public:
 
 	GUIContext(int width, int height, const string& font_path);
 	~GUIContext();
+
+	void init();
 
 	void draw() {}
 #ifdef CLI

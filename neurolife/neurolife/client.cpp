@@ -58,7 +58,7 @@ Client::Client() :
 
 Client::~Client() {}
 
-void Client::connect() {
+bool Client::connect() {
 	SOCKADDR_IN addr;
 	WSADATA WSAData;
 
@@ -67,7 +67,7 @@ void Client::connect() {
 
 	if (inet_pton(AF_INET, ip.c_str(), &(addr.sin_addr)) <= 0) {
 		printf("\n inet_pton error occured\n");
-		return;
+		return false;
 	}
 
 	addr.sin_family = AF_INET;
@@ -75,10 +75,11 @@ void Client::connect() {
 
 	if (::connect(sock, (SOCKADDR *)&addr, sizeof(addr)) != 0)
 	{
-		cout << "Client: connect() failed! Error code: " << WSAGetLastError();
-		return;
+		cout << "Client: connect() failed! Error code: " << WSAGetLastError() << endl;
+		return false;
 	}
 	cout << "Connected to server!" << endl;
+	return true;
 }
 
 void Client::send(const string& msg) {

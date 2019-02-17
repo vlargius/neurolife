@@ -9,6 +9,10 @@ GUIRender::GUIRender(const World * w, int with, int height) :
 	c.ys.source = w->getField().getHeight();
 }
 
+void GUIRender::run() {
+	c.init();
+}
+
 void GUIRender::flash() {
 	c.clear();
 	for (auto& a : w->getActors()) {

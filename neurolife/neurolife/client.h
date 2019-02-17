@@ -18,7 +18,7 @@ public:
 			this->ip = ip;
 	}
 
-	void connect();
+	bool connect();
 
 	void send(const string& msg);
 
