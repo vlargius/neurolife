@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{503a390f-58dd-4a74-9090-220b06e06b68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{39a8d100-92f6-4f2a-8356-66503ab16e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nnet">
+      <UniqueIdentifier>{099d0503-a81a-4bc5-ac34-059975211a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{4e00569c-a901-419f-bf0b-ff147c345763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{36c94ad8-2410-4d88-9355-7a4b411c4915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brain">
+      <UniqueIdentifier>{a5c42688-8e14-4a52-a095-562dd00cbcf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\components">
+      <UniqueIdentifier>{6d9e3fc7-ad9f-436b-a7a7-0b9f2bd9f17a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\gui">
+      <UniqueIdentifier>{c3fa9b85-a72b-4b6b-b67b-7390e1d5ea1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="socket">
+      <UniqueIdentifier>{d4fece43-961b-47d4-b085-c8761230cba0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="my_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="network.cpp">
+      <Filter>nnet</Filter>
+    </ClCompile>
+    <ClCompile Include="updater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="char_render.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="world.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="buckets.cpp">
+      <Filter>brain</Filter>
+    </ClCompile>
+    <ClCompile Include="controller.cpp">
+      <Filter>brain</Filter>
+    </ClCompile>
+    <ClCompile Include="actor.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="gui_context.cpp">
+      <Filter>render\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui_render.cpp">
+      <Filter>render\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="server.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="service_symbols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="network.h">
+      <Filter>nnet</Filter>
+    </ClInclude>
+    <ClInclude Include="updater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vec2d.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="buckets.h">
+      <Filter>brain</Filter>
+    </ClInclude>
+    <ClInclude Include="field.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="world.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="actor.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="controller.h">
+      <Filter>brain</Filter>
+    </ClInclude>
+    <ClInclude Include="char_render.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="comp_pos.h">
+      <Filter>objects\components</Filter>
+    </ClInclude>
+    <ClInclude Include="comp_move.h">
+      <Filter>objects\components</Filter>
+    </ClInclude>
+    <ClInclude Include="gui_context.h">
+      <Filter>render\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui_render.h">
+      <Filter>render\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="mutil.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="my_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="server.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="client.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\bin\default.cfg">
+      <Filter>config</Filter>
+    </None>
+  </ItemGroup>
+</Project>

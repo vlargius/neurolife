@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "build test",
+            "command": "clang++",
+            "args": [
+                "${workspaceFolder}/tests/*.cpp",
+                "${workspaceFolder}/tests/lib/*.cpp",
+                "-o",
+                "test"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "build debug",
+            "command": "clang++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/source/*.cpp",
+                "-o",
+                "neurolife"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

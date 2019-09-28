@@ -1,0 +1,14 @@
+neuro_test - simple test framework
+---------------------------------------------------------------------------
+ver_0.1
+
+case - the base class that can be overriden for particulat test case
+train - a pack of runner that run all tests
+
+
+
+[not implemented] fixture - test case with state
+
+[not implemented] caller - call one function from test and returns a result
+
+[not implemented] runner - runs a test, packs all test cases
