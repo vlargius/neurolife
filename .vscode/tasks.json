@@ -17,8 +17,8 @@
             }
         },
         {
-            "type": "shell",
-            "label": "build debug",
+            "type":  "shell",
+            "label": "build debug nerurolife",
             "command": "clang++",
             "args": [
                 "-g",
