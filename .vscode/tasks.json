@@ -23,6 +23,7 @@
             "args": [
                 "-g",
                 "${workspaceFolder}/source/*.cpp",
+                // "${workspaceFolder}/source/lib/*.cpp",
                 "-o",
                 "neurolife"
             ],
