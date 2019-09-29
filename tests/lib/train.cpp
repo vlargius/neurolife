@@ -7,6 +7,8 @@ namespace NTest {
     }
 
     Train::~Train() {
+        run();
+
         for (Case* test : cases) {
             delete test;
         }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "lib/train.h"
 
 class SimpleTest : public NTestCase {

@@ -6,13 +6,15 @@ testing environment for neurolife project
 
 #include "lib/train.h"
 #include "simple_test.h"
+#include "test_actor.h"
 
 
 int main(int argc, char*argv[])
 try {
     NTest::Train& train = NTest::Train::get();
+
     train.addTest(new SimpleTest());
-    train.run();
+    train.addTest(new ActorTest());
 }
 catch (const std::exception& e) {
     std::cerr << "there was an error: " << e.what() << std::endl;

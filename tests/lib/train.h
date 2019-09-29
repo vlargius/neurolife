@@ -11,7 +11,6 @@ class Train {
 public:
 
     static Train& get();
-
     ~Train();
 
     void run();

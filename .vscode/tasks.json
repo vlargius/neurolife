@@ -6,8 +6,9 @@
             "label": "build test",
             "command": "clang++",
             "args": [
+                "${workspaceFolder}/source/actor.cpp",
                 "${workspaceFolder}/tests/*.cpp",
-                // "${workspaceFolder}/tests/lib/*.cpp",
+                "${workspaceFolder}/tests/lib/*.cpp",
                 "-o",
                 "test"
             ],

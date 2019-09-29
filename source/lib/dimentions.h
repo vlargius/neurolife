@@ -1,6 +1,7 @@
 #pragma once
-// type rich dimentions infrastructure
-
+/*
+    type rich dimentions infrastructure
+*/
 
 namespace trd {
 
@@ -25,6 +26,14 @@ struct Value {
 
     Value():
         Value(0) {}
+
+    bool operator==(Value<UnitType> other) const {
+        return value == other.value;
+    }
+
+    bool operator!=(Value<UnitType> other) const {
+        return !(*this == other);
+    }
 
     template<typename InType, typename OutType =
         Value<Unit<value_type::m - InType::value_type::m,
@@ -97,9 +106,9 @@ struct Value {
     }
 };
 
-using Second = Value<Unit<0, 0, 1>>;
-using Meter = Value<Unit<1, 0, 0>>;
-using Speed = Value<Unit<1, 0, -1>>;
-using Acceleration = Value<Unit<1, 0, -2>>;
-
 }
+
+using Second = trd::Value<trd::Unit<0, 0, 1>>;
+using Meter = trd::Value<trd::Unit<1, 0, 0>>;
+using Speed = trd::Value<trd::Unit<1, 0, -1>>;
+using Acceleration = trd::Value<trd::Unit<1, 0, -2>>;

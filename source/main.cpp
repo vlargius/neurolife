@@ -5,14 +5,16 @@ entering point of neurolife project
 #include <iostream>
 #include <string>
 
-#include "lib/dimentions.h"
-#include "lib/print_dimentions.h"
+#include "actor.h"
 
-using namespace trd;
 
 int main(int argc, char*argv[])
 try {
+    Actor a;
 
+    Actor b(Position{Meter(523), Meter(32)});
+
+    std::cout << a << " " << b;
 
     return 0;
 } catch (const std::exception& e) {
