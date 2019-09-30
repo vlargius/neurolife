@@ -32,8 +32,7 @@ const char* type_to_string(const Speed&) {
 
 template<class UnitType>
 std::ostream& operator<<(std::ostream& os, const Value<UnitType>& value) {
-    os << value.value << type_to_string(value);
-    return os;
+    return os << value.value << type_to_string(value);
 }
 
 template<class UnitType>

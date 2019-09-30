@@ -35,6 +35,22 @@ struct Value {
         return !(*this == other);
     }
 
+    bool operator>(Value<UnitType> other) const {
+        return value > other.value;
+    }
+
+    bool operator<(Value<UnitType> other) const {
+        return value < other.value;
+    }
+
+    bool operator>=(Value<UnitType> other) const {
+        return value >= other.value;
+    }
+
+    bool operator<=(Value<UnitType> other) const {
+        return value <= other.value;
+    }
+
     template<typename InType, typename OutType =
         Value<Unit<value_type::m - InType::value_type::m,
             value_type::k - InType::value_type::k,
