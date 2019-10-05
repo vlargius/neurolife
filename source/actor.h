@@ -13,8 +13,6 @@ struct Position {
     Meter y;
 };
 
-std::ostream& operator<<(std::ostream&, const Position&);
-
 struct Actor {
 public:
     Position pos;
@@ -27,4 +25,5 @@ public:
 
 };
 
+std::ostream& operator<<(std::ostream&, const Position&);
 std::ostream& operator<<(std::ostream&, const Actor&);

@@ -5,16 +5,12 @@ entering point of neurolife project
 #include <iostream>
 #include <string>
 
-#include "actor.h"
+#include "world.h"
 
 
 int main(int argc, char*argv[])
 try {
-    Actor a;
-
-    Actor b(Position{Meter(523), Meter(32)});
-
-    std::cout << a << " " << b;
+    
 
     return 0;
 } catch (const std::exception& e) {
