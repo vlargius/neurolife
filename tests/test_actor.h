@@ -13,10 +13,6 @@ public:
         Position pos{Meter(123.34), Meter(23)};
         Actor a(pos);
 
-        if (a.pos.x == pos.x && a.pos.y == pos.y) {
-            std::cout << "done" << std::endl;
-        } else {
-            std::cout << "failed" << std::endl;
-        }
+        Assert(a.pos.x == pos.x && a.pos.y == pos.y, "Copy constructor failed");
     }
 };

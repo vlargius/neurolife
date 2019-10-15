@@ -7,36 +7,34 @@
 #include "dimentions.h"
 
 
-namespace trd {
-
 template<class UnitType>
-const char* type_to_string(const UnitType&) {
+inline const char* type_to_string(const UnitType&) {
     return "[units]";
 }
 
 template<>
-const char* type_to_string(const Second&) {
+inline  const char* type_to_string(const Second&) {
     return "[s]";
 }
 
 template<>
-const char* type_to_string(const Meter&) {
+inline  const char* type_to_string(const Meter&) {
     return "[m]";
 }
 
 template<>
-const char* type_to_string(const Speed&) {
+inline  const char* type_to_string(const Speed&) {
     return "[m/s]";
 }
 
 
 template<class UnitType>
-std::ostream& operator<<(std::ostream& os, const Value<UnitType>& value) {
+inline  std::ostream& operator<<(std::ostream& os, const trd::Value<UnitType>& value) {
     return os << value.value << type_to_string(value);
 }
 
 template<class UnitType>
-std::istream& operator>>(std::istream& is, Value<UnitType>& value) {
+inline  std::istream& operator>>(std::istream& is, trd::Value<UnitType>& value) {
     is >> value.value;
     const char* typeStr = type_to_string(value);
     char c;
@@ -48,6 +46,4 @@ std::istream& operator>>(std::istream& is, Value<UnitType>& value) {
         ++i;
     }
     return is;
-}
-
 }

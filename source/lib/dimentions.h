@@ -128,3 +128,11 @@ using Second = trd::Value<trd::Unit<0, 0, 1>>;
 using Meter = trd::Value<trd::Unit<1, 0, 0>>;
 using Speed = trd::Value<trd::Unit<1, 0, -1>>;
 using Acceleration = trd::Value<trd::Unit<1, 0, -2>>;
+
+template<class ValueType>
+double to_double(const trd::Value<ValueType>& value) { return value.value; }
+
+// using Second = double;
+// using Meter = double;
+// using Speed = double;
+// using Acceleration = double;
