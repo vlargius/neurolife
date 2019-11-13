@@ -4,15 +4,19 @@
 #include "../source/actor.h"
 
 
-class ActorTest : public NTestCase {
+using namespace NTest;
+
+class ActorTest : public Case {
 public:
     ActorTest():
-        NTestCase("Actor test") {}
+        Case("Actor test") {}
 
     void run() override {
         Position pos{Meter(123.34), Meter(23)};
-        Actor a(pos);
+        Kilogram mass{1.0};
+        Actor a(pos, mass);
 
-        Assert(a.pos.x == pos.x && a.pos.y == pos.y, "Copy constructor failed");
+        Assert(a.pos.x == pos.x && a.pos.y == pos.y && a.mass == mass,
+            "Copy constructor failed");
     }
 };

@@ -1,3 +1,4 @@
+#pragma once
 /*
 asserter - checks various conditions and throw assert object if condition is fulfilled
 */
@@ -6,15 +7,14 @@ asserter - checks various conditions and throw assert object if condition is ful
 #include <sstream>
 #include <limits>
 
-namespace NTest {
-
+namespace NTest{
 struct AssertException : public std::logic_error {
     AssertException(const std::string& msg):
         std::logic_error(msg) {}
 };
 }
 
-inline void Assert(bool value, const std::string& message = "") {
+inline void Assert(bool value, const std::string& message = "assertation failed") {
     if (!value) {
         throw NTest::AssertException(message);
     }
@@ -23,6 +23,16 @@ inline void Assert(bool value, const std::string& message = "") {
 template<class Type1, class Type2>
 void AssertEqual(const Type1& value, const Type2& desired, const std::string& parname = "") {
     if (value != desired) {
+        std::stringstream ss;
+        ss << (!parname.empty() ? parname : "value")
+            << ": " << value << " != " << desired;
+        throw NTest::AssertException(ss.str());
+    }
+}
+
+template<class Type1, class Type2>
+void AssertNotEqual(const Type1& value, const Type2& desired, const std::string& parname = "") {
+    if (value == desired) {
         std::stringstream ss;
         ss << (!parname.empty() ? parname : "value")
             << ": " << value << " != " << desired;

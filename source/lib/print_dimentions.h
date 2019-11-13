@@ -23,7 +23,7 @@ inline  const char* type_to_string(const Meter&) {
 }
 
 template<>
-inline  const char* type_to_string(const Speed&) {
+inline  const char* type_to_string(const MeterPerSec&) {
     return "[m/s]";
 }
 
@@ -46,4 +46,9 @@ inline  std::istream& operator>>(std::istream& is, trd::Value<UnitType>& value) 
         ++i;
     }
     return is;
+}
+
+template<class UnitType>
+std::ostream& operator<<(std::ostream& os, const trd::Vec2<UnitType>& p) {
+    return os << "(" << p.x << ", " << p.y << ")";
 }

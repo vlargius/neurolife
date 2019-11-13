@@ -6,11 +6,14 @@
 #include "../source/updater.h"
 
 using namespace std::chrono;
+using namespace NTest;
 
-class UpdaterTest : public NTestCase {
+using chrono_time_point = std::chrono::system_clock::time_point;
+
+class UpdaterTest : public Case {
 public:
     UpdaterTest():
-        NTestCase("Updater test") {}
+        Case("Updater test") {}
 
     void run() override {
         static int ticks = 0;
@@ -27,14 +30,14 @@ public:
         Updater updater(&inst);
 
         Updater::RunConfig conf {
-            .dt = dt,
+            .fps = Hertz(25),
             .ttl = stepCount,
             .throttle=false
         };
 
-        std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+        chrono_time_point start = std::chrono::system_clock::now();
         updater.run(conf);
-        std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+        chrono_time_point end = std::chrono::system_clock::now();
         double duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() / 1000.;
 
 

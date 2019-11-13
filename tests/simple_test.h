@@ -2,10 +2,11 @@
 
 #include "lib/train.h"
 
-class SimpleTest : public NTestCase {
+using namespace NTest;
+class SimpleTest : public Case {
 public:
     SimpleTest():
-        NTestCase("Simple test") {}
+        Case("Simple test") {}
 
     void run() override {
         std::cout << "test" << std::endl;

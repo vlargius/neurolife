@@ -9,7 +9,7 @@ class Case {
 public:
     Case(const std::string& name):
         name(name) {}
-    virtual ~Case() {}
+    virtual ~Case() = default;
 
     virtual void run() = 0;
 
@@ -18,5 +18,3 @@ protected:
     const std::string name;
 };
 }  // namespace NTest
-
-using NTestCase = NTest::Case;
