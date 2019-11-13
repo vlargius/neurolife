@@ -76,6 +76,10 @@
         "__tuple": "cpp",
         "ios": "cpp",
         "locale": "cpp",
-        "queue": "cpp"
-    }
+        "queue": "cpp",
+        "__memory": "cpp"
+    },
+    "C_Cpp.dimInactiveRegions": false,
+    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
+    "C_Cpp.clang_format_sortIncludes": true
 }

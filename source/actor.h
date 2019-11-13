@@ -8,22 +8,24 @@ base actor unit class that represent a victim or a predator
 #include "lib/dimentions.h"
 
 
-struct Position {
-    Meter x;
-    Meter y;
-};
-
 struct Actor {
 public:
     Position pos;
+    Velocity vel;
+    Force force;
+    Kilogram mass;
 
     Actor():
-        pos() {}
+        pos(),
+        vel(),
+        force() {}
 
-    Actor(const Position& pos):
-        pos(pos) {}
+    explicit Actor(const Position& pos, const Kilogram& mass):
+        pos(pos),
+        mass(mass) {}
+
+    Meter distance(const Actor& other);
 
 };
 
-std::ostream& operator<<(std::ostream&, const Position&);
 std::ostream& operator<<(std::ostream&, const Actor&);

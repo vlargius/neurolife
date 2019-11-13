@@ -27,7 +27,8 @@
         {
             "name": "win",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "{workspaceFolder}/source/**"
             ],
             "defines": [
                 "_DEBUG",

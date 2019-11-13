@@ -25,9 +25,10 @@
             "args": [
                 "-g",
                 "${workspaceFolder}/source/*.cpp",
-                // "${workspaceFolder}/source/lib/*.cpp",
+                "${workspaceFolder}/source/render/*.cpp",
                 "-o",
-                "neurolife"
+                "neurolife",
+                "-lSDL2"
             ],
             "group": {
                 "kind": "build",

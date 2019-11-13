@@ -7,35 +7,37 @@
 #include "lib/print_dimentions.h"
 
 namespace chrono = std::chrono;
+using chrono_time_point = chrono::system_clock::time_point;
 
-Updater::Updater(IUpdatable* inst):
-    instance(inst) {}
+Updater::Updater(IUpdatable* instance):
+    instance(instance) {}
 
 // - ticks time with set dt up untill ttl is not zero.
 // - if calculating is more then set dt calculate new appropriate dt
 void Updater::run(const RunConfig& config) {
+    if (!instance)
+        throw std::runtime_error("There is no instance for running updater");
 
-    ttl = config.ttl;
-    constDt = config.dt;
+    instance->ttl = config.ttl;
+    constDt = 1./config.fps;
 
-    chrono::system_clock::time_point startAt = chrono::system_clock::now();
+    chrono_time_point startAt = chrono::system_clock::now();
     Second dt(constDt);
 
-    for (currStep = 1; currStep <= ttl; ++currStep) {
+    for (instance->currStep = 1; instance->running && instance->currStep <= instance->ttl; ++instance->currStep) {
 
         tick(dt);
 
-        chrono::system_clock::time_point lastStepTime = chrono::system_clock::now();
-        chrono::system_clock::time_point nextStepTime = startAt + chrono::milliseconds(long(to_double(constDt) * currStep*1000));
-        if (config.throttle && lastStepTime > nextStepTime)
-        {
-            double freeze = chrono::duration_cast<chrono::milliseconds>(lastStepTime - nextStepTime).count()*0.001;
-            int offsetStep = std::ceil(freeze / to_double(constDt));
+        chrono_time_point lastStepTime = chrono::system_clock::now();
+        chrono_time_point nextStepTime = startAt
+            + chrono::milliseconds(long(to_double(constDt)*instance->currStep*std::milli::den));
+
+        if (config.throttle && lastStepTime > nextStepTime) {
+            Second actualDt(chrono::duration_cast<chrono::milliseconds>(lastStepTime - nextStepTime).count() / std::milli::den);
+            int offsetStep = std::ceil(to_double(actualDt / constDt));
             dt = constDt*offsetStep;
-            currStep += offsetStep;
-        }
-        else
-        {
+            instance->currStep += offsetStep;
+        } else {
             dt = constDt;
         }
         std::this_thread::sleep_until(nextStepTime);

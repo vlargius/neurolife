@@ -2,30 +2,29 @@
 entering point of neurolife project
 */
 
+#include <time.h>
 #include <iostream>
-#include <string>
 #include <memory>
+#include <string>
 
-#include "updater.h"
+#include "manager.h"
 
+int main(int argc, char *argv[]) try {
+    World::CreateConf w_conf{
+        .size = {Meter(100), Meter(100)},
+        .actors_count = 10};
 
-int main(int argc, char*argv[])
-try {
-    struct data : IUpdatable {
-        void tick(Second dt) override {
-            std::cout << "hello\n";
-        }
-    } inst;
-    Updater updater(&inst);
+    GuiRender::CreateConf r_conf{.outBox = {1020, 980}};
 
-    Updater::RunConfig config;
-    config.dt = Second(1);
-    config.ttl = 80;
+    Manager manager(w_conf, Second(.0002), r_conf);
+    Updater updater(&manager);
+
+    Updater::RunConfig config{.fps = Hertz(50), .ttl = 10000};
 
     updater.run(config);
 
     return 0;
-} catch (const std::exception& e) {
+} catch (const std::exception &e) {
     std::cerr << "error: " << e.what() << std::endl;
 } catch (...) {
     std::cerr << "something bad has happened" << std::endl;

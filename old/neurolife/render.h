@@ -5,9 +5,9 @@ using namespace std;
 
 #include "world.h"
 
-class Render {
+class IRender {
 public:
-	Render(const World* w) : w(w) {}
+	IRender(const World* w) : w(w) {}
 	virtual void run() = 0;
 	virtual void flash() = 0;
 

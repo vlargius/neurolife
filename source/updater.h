@@ -8,31 +8,28 @@ updater system for working with units
 
 #include "lib/dimentions.h"
 
-struct IUpdatable
-{
+struct IUpdatable {
+    long ttl = 0;
+    long currStep = 0;
+    bool running = true;
+
+    virtual ~IUpdatable() = default;
     virtual void tick(Second dt) = 0;
 };
 
 class Updater {
 public:
     struct RunConfig {
-        Second dt     = Second{1};
-        long ttl      = 10;
+        Hertz fps     = Hertz{25};
+        long  ttl     = 10;
         bool throttle = false;
     };
 
-    struct RunStats {
-
-    };
-
-    Updater(IUpdatable* inst);
+    Updater(IUpdatable* instance);
 
     void run(const RunConfig& config);
-    long getCurrStep() const { return currStep - 1; }
 
 protected:
-    long ttl = 0;
-    long currStep = 0;
     Second constDt = Second(0);
     IUpdatable* instance;
 
